@@ -1,0 +1,14 @@
+{
+  "name": "chore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/hashBase64.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "big.js": "^6.1.1"
+  }
+}
