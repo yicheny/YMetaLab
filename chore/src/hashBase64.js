@@ -40,11 +40,8 @@ function encodeBufferToBase(buffer, base) {
     return output;
 }
 
-//3Lbnm
-
-//fixtures/modules/ylvfeng/index.css colorWhite
-const data = 'fixtures/modules/ylvfeng/index.css colorWhite'
-console.log('data',data);
-const hash = crypto.createHash('md4').update(data);
-const cn = encodeBufferToBase(hash.digest(),64);
+//fixtures/modules/ylvfeng/index.css colorWhite //1C_3_Y83kln_LIVNkIOrYj
+const data = 'fixtures/modules/ylvfeng/index.css\x00colorWhite'
+const hash = crypto.createHash('md4').update(data)
+const cn = encodeBufferToBase(hash.digest(),64)
 console.log(cn);
