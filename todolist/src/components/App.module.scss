@@ -1,7 +1,7 @@
 //默认不会全局生效-即使有组件使用了colorBlue作为类名
 //需要调用styles.colorBlue使用
 .colorBlue{
-  color:blue
+  color:deepskyblue;
 }
 
 //加上:global修饰符会全局生效

@@ -3,19 +3,17 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
-import {createStore} from "redux";
+import {applyMiddleware, createStore} from "redux";
+import thunkMiddleware from 'redux-thunk';
 import formApp from "./reducers/formApp";
-import styles from './index.module.scss';
 
-const store = createStore(formApp);
+const store = createStore(formApp,applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
   <React.StrictMode>
-      <div className={styles.colorBlue}>
-          <Provider store={store}>
-              <App />
-          </Provider>
-      </div>
+      <Provider store={store}>
+          <App />
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
