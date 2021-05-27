@@ -1,10 +1,12 @@
 import React from 'react';
 import CircleMenu from "./component/CircleMenu";
+import styles from './App.module.scss'
 
 const items = Array.from(Array(6),(x,i)=>{
     return {
         children:i,
-        onClick:()=>console.log(i)
+        onClick:()=>console.log(i),
+        className:styles.menuItem
     }
 })
 
