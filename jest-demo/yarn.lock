@@ -1956,22 +1956,22 @@
     debug "^4.3.1"
 
 "@typescript-eslint/scope-manager@4.27.0":
-  version "4.26.1"
-  resolved "http://192.168.1.56:8081/repository/npm-public/@typescript-eslint/scope-manager/-/scope-manager-4.26.1.tgz#075a74a15ff33ee3a7ed33e5fce16ee86689f662"
-  integrity sha1-B1p0oV/zPuOn7TPl/OFu6GaJ9mI=
+  version "4.26.2-alpha.11"
+  resolved "http://192.168.1.56:8081/repository/npm-public/@typescript-eslint/scope-manager/-/scope-manager-4.26.2-alpha.11.tgz#7d3c0c152809f52610fdb1fee3318b7583b501b4"
+  integrity sha1-fTwMFSgJ9SYQ/bH+4zGLdYO1AbQ=
   dependencies:
-    "@typescript-eslint/types" "4.26.1"
-    "@typescript-eslint/visitor-keys" "4.26.1"
+    "@typescript-eslint/types" "4.26.2-alpha.11+79b510c0"
+    "@typescript-eslint/visitor-keys" "4.26.2-alpha.11+79b510c0"
 
 "@typescript-eslint/types@3.10.1":
   version "3.10.1"
   resolved "http://192.168.1.56:8081/repository/npm-public/@typescript-eslint/types/-/types-3.10.1.tgz#1d7463fa7c32d8a23ab508a803ca2fe26e758727"
   integrity sha1-HXRj+nwy2KI6tQioA8ov4m51hyc=
 
-"@typescript-eslint/types@4.26.1", "@typescript-eslint/types@4.27.0":
-  version "4.26.1"
-  resolved "http://192.168.1.56:8081/repository/npm-public/@typescript-eslint/types/-/types-4.26.1.tgz#9e7c523f73c34b04a765e4167ca5650436ef1d38"
-  integrity sha1-nnxSP3PDSwSnZeQWfKVlBDbvHTg=
+"@typescript-eslint/types@4.26.2-alpha.11+79b510c0", "@typescript-eslint/types@4.27.0":
+  version "4.26.2-alpha.11"
+  resolved "http://192.168.1.56:8081/repository/npm-public/@typescript-eslint/types/-/types-4.26.2-alpha.11.tgz#a76b55701f5535bb68c0cd5314b7e3801bbc1547"
+  integrity sha1-p2tVcB9VNbtowM1TFLfjgBu8FUc=
 
 "@typescript-eslint/typescript-estree@3.10.1":
   version "3.10.1"
@@ -2007,12 +2007,12 @@
   dependencies:
     eslint-visitor-keys "^1.1.0"
 
-"@typescript-eslint/visitor-keys@4.26.1", "@typescript-eslint/visitor-keys@4.27.0":
-  version "4.26.1"
-  resolved "http://192.168.1.56:8081/repository/npm-public/@typescript-eslint/visitor-keys/-/visitor-keys-4.26.1.tgz#0d55ea735cb0d8903b198017d6d4f518fdaac546"
-  integrity sha1-DVXqc1yw2JA7GYAX1tT1GP2qxUY=
+"@typescript-eslint/visitor-keys@4.26.2-alpha.11+79b510c0", "@typescript-eslint/visitor-keys@4.27.0":
+  version "4.26.2-alpha.11"
+  resolved "http://192.168.1.56:8081/repository/npm-public/@typescript-eslint/visitor-keys/-/visitor-keys-4.26.2-alpha.11.tgz#963a865d1eecd9215b48330ddb5120c27506a00a"
+  integrity sha1-ljqGXR7s2SFbSDMN21EgwnUGoAo=
   dependencies:
-    "@typescript-eslint/types" "4.26.1"
+    "@typescript-eslint/types" "4.26.2-alpha.11+79b510c0"
     eslint-visitor-keys "^2.0.0"
 
 "@webassemblyjs/ast@1.9.0":
