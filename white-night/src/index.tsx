@@ -10,7 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
     <HashRouter>
         <Switch>
-            <Route path='demo' component={Demos}/>
+            <Route path='/demo' component={Demos}/>
             <Route component={App}/>
         </Switch>
     </HashRouter>
