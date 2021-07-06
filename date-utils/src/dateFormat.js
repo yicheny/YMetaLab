@@ -5,10 +5,12 @@ function dateFormat(fmt,d){
     const parseDate = {
         Y : d.getFullYear(),
         M : add0(d.getMonth() + 1),
-        D : add0(d.getDay()),
+        D : add0(d.getDate()),
         H : add0(d.getHours()),
         m : add0(d.getMinutes()),
         s : add0(d.getSeconds()),
+        // w : add0(d.getDay()),//0~6 周一~周六
+        // W : getWeekNum(),//当前年份第x周，需要自实现
     }
 
     let result = '';
@@ -16,7 +18,7 @@ function dateFormat(fmt,d){
 
     for(let i=0;i < fmt.length;i++){
         switch (c = fmt.charAt(i) ){
-            case "Y": case "M": case "D": case "H": case("m"): case("s"):
+            case "Y": case "M": case "D": case "H": case"m": case"s":
                 result = result.concat(parseDate[c]);
                 break;
             default:
@@ -31,7 +33,7 @@ function dateFormat(fmt,d){
 console.log(dateFormat('Y-M-D H:m:s',new Date()));
 console.log(dateFormat('Y/M/D H:m:s',new Date()));
 console.log(dateFormat('H:m:s',new Date()));
-console.log(dateFormat('Y-M-D',new Date()));
+console.log(dateFormat('YMDTHmsS',new Date()));
 
 // export default curry(dateFormat);
 
@@ -62,4 +64,8 @@ function isDate(d){
 
 function add0(v){
     return v>9 ? v : `0${v}`;
+}
+
+function getWeekNum(){
+
 }
