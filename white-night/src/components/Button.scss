@@ -1,0 +1,17 @@
+.c-button{
+  &:active{
+    box-shadow: 0 6px 4px 0 rgba(30,144,255,0.84);
+  }
+  padding:6px 24px;
+  background:rgba(30,144,255,0.64);
+  border-radius: 12px;
+  font-weight: 600;
+  user-select: none;
+  cursor: pointer;
+  box-shadow: 0 8px 4px 0 rgba(30,144,255,0.84);
+
+  color: #fbfbfb;
+  font-family: 'Open Sans', sans-serif;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.4);
+  font-size: 15px;
+}
