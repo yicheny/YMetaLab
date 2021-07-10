@@ -1,10 +1,16 @@
 import {registeredDemosMenu} from "./registeredDemosMenu";
 import styles from './index.module.scss';
-import Button from "../components/Button";
+import {Switch,Route} from "react-router-dom";
+import Home from "./Home";
+import CreateCharacter from "./CreateCharacter";
+import {Path} from "./constant";
 
 registeredDemosMenu();
 export default function Demos() {
     return (<div className={styles.demo}>
-        <Button>Button</Button>
+        <Switch>
+            <Route path={Path.CreateCharacter} component={CreateCharacter}/>
+            <Route component={Home}/>
+        </Switch>
     </div>)
 };
