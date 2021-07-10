@@ -1,6 +1,8 @@
 export interface ICharacterInfo{
     //姓名
     name:string,
+    //生命值
+    hp:number,
     //力量
     power:number,
     //防御

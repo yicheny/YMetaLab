@@ -24,14 +24,32 @@ function useRandomCreateCharacter(){
     return {character,randomCreate};
 }
 
-function createCharacter():ICharacterInfo{
+function createCharacter(max=120):ICharacterInfo{
+    const numbers = randomDistribution(6,max)
     return {
-        name:"abc",
-        power:_.random(100),
-        speed:_.random(100),
-        defense:_.random(100),
-        lucky:_.random(100),
-        technology:_.random(100),
+        name:"温雪",
+        power:numbers[0],
+        speed:numbers[1],
+        defense:numbers[2],
+        lucky:numbers[3],
+        technology:numbers[4],
+        hp:numbers[5] * 2,
         endurance:10
+    }
+}
+
+//随机分配数值
+function randomDistribution(count:number,max:number){
+    return create();
+
+    function create(){
+        const result:Array<number> = _.times(count,()=>0);
+
+        _.forEach(Array(max),()=>{
+            const r = _.random(0,count-1);
+            result[r]++;
+        })
+
+        return result;
     }
 }

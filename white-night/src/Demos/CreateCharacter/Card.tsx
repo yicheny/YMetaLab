@@ -9,6 +9,7 @@ export default function Card(props:ICard){
     return <ReactEcharts option={useOption(props.data)} style={{width:800,marginTop:60,height:560}}/>
 }
 
+const max = 30;
 function useOption(data?:ICharacterInfo){
     return useMemo(()=>{
         return {
@@ -21,11 +22,12 @@ function useOption(data?:ICharacterInfo){
             radar: {
                 // shape: 'circle',
                 indicator: [
-                    { name: `力量${data?.power}`, max: 100},
-                    { name: `防御${data?.defense}`, max: 100},
-                    { name: `幸运${data?.lucky}`, max: 100},
-                    { name: `技术${data?.technology}`, max: 100},
-                    { name: `速度${data?.speed}`, max: 100},
+                    { name: `生命值${data?.hp}`, max:max*2},
+                    { name: `力量${data?.power}`, max},
+                    { name: `防御${data?.defense}`, max},
+                    { name: `幸运${data?.lucky}`, max},
+                    { name: `技术${data?.technology}`, max},
+                    { name: `速度${data?.speed}`, max},
                 ],
             },
             series: [{
@@ -34,6 +36,7 @@ function useOption(data?:ICharacterInfo){
                     {
                         name: `角色-${data?.name}`,
                         value: [
+                            data?.hp,
                             data?.power,
                             data?.defense,
                             data?.lucky,
