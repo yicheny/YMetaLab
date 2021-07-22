@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["../src/index.js"],"sourcesContent":["export function add(a,b){\r\n    return a + b;\r\n}\r\n"],"names":["add","a","b"],"mappings":";;;;AAAO,SAASA,GAAT,CAAaC,CAAb,EAAeC,CAAf,EAAiB;AACpB,SAAOD,CAAC,GAAGC,CAAX;AACH;;;;"}
