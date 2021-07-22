@@ -8,8 +8,15 @@
   },
   "author": "ylf",
   "license": "ISC",
+  "peerDependencies": {
+    "react": ">=16.8",
+    "react-router-dom": ">=4",
+    "invariant": ">=2"
+  },
   "dependencies": {
-    "invariant": "^2.2.4"
+    "invariant": "^2.2.4",
+    "react": "^17.0.2",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
