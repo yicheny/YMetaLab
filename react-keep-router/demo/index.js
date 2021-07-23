@@ -1,3 +1,23 @@
-const {add} = require('react-keep-router');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {HashRouter as Router,Route,Switch} from "react-router-dom";
+import {KeepRoute} from 'react-keep-router';
 
-console.log(add(1,3))
+function App(){
+    return <Router>
+        <Switch>
+            <Route path='/view/1'><View title='view1'/></Route>
+            <Route path='/view/2'><View title='view2'/></Route>
+            <KeepRoute path='/view/keep'><View title='keep'/></KeepRoute>
+            <Route>Home</Route>
+        </Switch>
+    </Router>
+}
+
+ReactDOM.render(App,'rootDOM');
+
+function View(props){
+    return <div>
+        <h2>标题：{props.title}</h2>
+    </div>
+}
