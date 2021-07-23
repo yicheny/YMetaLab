@@ -1,0 +1,7 @@
+node_modules
+demo
+doc
+.npmignore
+rollup.config.js
+package-lock.json
+example
