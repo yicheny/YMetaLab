@@ -1,3 +1,11 @@
+import _ from 'lodash';
+
+console.log(_.concat(1,2,2,3,4,4));
+
+// import ReactDOM from 'react-dom';
+// ReactDOM.render('demo',document.querySelector('#root'))
+
+/*
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {HashRouter as Router,Route,Switch} from "react-router-dom";
@@ -21,3 +29,4 @@ function View(props){
         <h2>标题：{props.title}</h2>
     </div>
 }
+*/
