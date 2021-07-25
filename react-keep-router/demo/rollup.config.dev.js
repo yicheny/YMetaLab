@@ -5,7 +5,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import livereload from "rollup-plugin-livereload";
 
 export default {
-    input:'src/index.js',
+    input:'src/index.jsx',
     output:{
         file:'dist/bundle.cjs.js',
         format:'cjs',
@@ -13,12 +13,12 @@ export default {
         sourcemap:true,
     },
     plugins:[
-        resolve(),
-        commonjs(),
+        resolve(),//默认不能获取node_modules内的文件
+        commonjs(),//es6模块语法转换
         babel({
            exclude:"node_modules/**"
         }),
-        livereload(),
+        livereload(),//热加载
         serve({
             open:true,
             port:3021,

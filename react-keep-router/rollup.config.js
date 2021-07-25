@@ -1,6 +1,7 @@
 import resolve from 'rollup-plugin-node-resolve'
 import babel from 'rollup-plugin-babel'
-import { uglify } from 'rollup-plugin-uglify'
+import commonjs from "@rollup/plugin-commonjs";
+// import { uglify } from 'rollup-plugin-uglify'
 
 export default [
     {
@@ -18,30 +19,10 @@ export default [
         ],
         plugins: [
             resolve(),
+            commonjs(),
             babel({
                 exclude: 'node_modules/**'
             })
         ]
     },
-
-    {
-        input: 'src/index.js',
-        output: {
-            name: 'keepRouter',
-            file: 'lib/index.min.js',
-            format: 'umd'
-        },
-        external: [
-            'react',
-            'react-router-dom',
-            'invariant',
-        ],
-        plugins: [
-            resolve(),
-            babel({
-                exclude: 'node_modules/**'
-            }),
-            uglify()
-        ]
-    }
 ]
