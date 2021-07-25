@@ -7,7 +7,10 @@ import init from './init';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {HashRouter as Router,Route,Switch} from "react-router-dom";
-// import {KeepRoute} from 'react-keep-router';
+// import {KeepSwitch} from 'react-keep-router';//发布包测试
+import {add} from '../lib';//日常修改测试
+
+console.log(add(22,45))
 
 ReactDOM.render(<App/>,document.querySelector('#root'));
 
