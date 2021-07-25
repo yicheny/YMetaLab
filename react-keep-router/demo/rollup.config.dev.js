@@ -21,11 +21,11 @@ export default {
         livereload(),
         serve({
             open:true,
-            port:8888,
+            port:3021,
             contentBase:''
         })
     ],
     external:[
 
-    ]
+    ],
 }

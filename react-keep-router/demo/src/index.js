@@ -1,9 +1,6 @@
-import _ from 'lodash';
-
-console.log(_.concat(1,2,2,3,4,4));
-
-// import ReactDOM from 'react-dom';
-// ReactDOM.render('demo',document.querySelector('#root'))
+import init from './init';
+import ReactDOM from 'react-dom';
+ReactDOM.render('demo',document.querySelector('#root'))
 
 /*
 import React from 'react';
