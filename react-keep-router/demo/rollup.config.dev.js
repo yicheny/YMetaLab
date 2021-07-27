@@ -3,6 +3,8 @@ import serve from 'rollup-plugin-dev'
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from "rollup-plugin-livereload";
+const postcss = require('rollup-plugin-postcss');
+// const sass = require('sass');
 
 export default {
     input:'src/index.jsx',
@@ -15,6 +17,12 @@ export default {
     plugins:[
         resolve(),//默认不能获取node_modules内的文件
         commonjs(),//es6模块语法转换
+        postcss({
+            extract: true,
+            minimize: false,
+            extensions:['scss'],
+            // process: processSass,
+        }),
         babel({
            exclude:"node_modules/**"
         }),
@@ -29,3 +37,17 @@ export default {
 
     ],
 }
+
+// function processSass(context, payload) {
+//     return new Promise(( resolve, reject ) => {
+//         sass.render({
+//             file: context
+//         }, function(err, result) {
+//             if( !err ) {
+//                 resolve(result);
+//             } else {
+//                 reject(err)
+//             }
+//         });
+//     })
+// }
