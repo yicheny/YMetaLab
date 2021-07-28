@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Menu from "./Menu.jsx";
+// import {KeepAliveProvider,KeepAlive} from 'react-keep-router';//发布包测试
+import {Test} from '../../src';//日常修改测试
+
+// console.log({KeepAliveProvider,KeepAlive})
+
+console.log(Test)
 
 export default function App(){
     return <Router>
