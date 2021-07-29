@@ -24,7 +24,7 @@ export default {
         }),
         babel({
             exclude:"node_modules/**",
-            extensions:['.js', '.jsx'],
+            // extensions:['.js', '.jsx'],
             babelHelpers:"bundled"
         }),
         livereload(),//热加载
