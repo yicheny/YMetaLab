@@ -3,11 +3,10 @@ import { babel } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from "rollup-plugin-livereload";
-const postcss = require('rollup-plugin-postcss');
-// const sass = require('sass');
+import postcss from 'rollup-plugin-postcss';
 
 export default {
-    input:'src/index.jsx',
+    input:'demo/index.jsx',
     output:{
         file:'dist/bundle.cjs.js',
         format:'cjs',
@@ -24,9 +23,9 @@ export default {
             // process: processSass,
         }),
         babel({
-           exclude:"node_modules/**",
-           extensions:['.js', '.jsx'],
-           babelHelpers:"bundled"
+            exclude:"node_modules/**",
+            extensions:['.js', '.jsx'],
+            babelHelpers:"bundled"
         }),
         livereload(),//热加载
         serve({
