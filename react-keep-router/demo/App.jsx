@@ -4,17 +4,23 @@ import Menu from "./Menu.jsx";
 // import {KeepAliveProvider,KeepAlive} from 'react-keep-router';//发布包测试
 import {KeepAlive,KeepAliveProvider} from '../src/index.jsx';//日常修改测试
 
-console.log({KeepAliveProvider,KeepAlive})
+// console.log({KeepAliveProvider,KeepAlive})
 
 export default function App(){
     return <Router>
-        <Menu/>
-        <Switch>
-            <Route path='/view/1'><View title='view1'/></Route>
-            <Route path='/view/2'><View title='view2'/></Route>
-            <Route path='/view/keep'><View title='keep'/></Route>
-            <Route>Home</Route>
-        </Switch>
+        <KeepAliveProvider>
+            <Menu/>
+            <Switch>
+                <Route path='/view/1'><View title='view1'/></Route>
+                <Route path='/view/2'><View title='view2'/></Route>
+                <Route path='/view/keep'>
+                    <KeepAlive>
+                        <View title='keep'/>
+                    </KeepAlive>
+                </Route>
+                <Route>Home</Route>
+            </Switch>
+        </KeepAliveProvider>
     </Router>
 }
 

@@ -1,4 +1,4 @@
-import { createContext, PureComponent, useContext } from 'react';
+import React,{ createContext, PureComponent, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import createCache from "./CaChe";
 
@@ -14,6 +14,7 @@ export default class KeepAliveProvider extends PureComponent {
         super(props);
         this.storeDom = createProvider().dom;
         this.cache = createCache();
+        console.log('constructor',this.storeDom)
     }
 
     componentDidMount() {
@@ -22,6 +23,7 @@ export default class KeepAliveProvider extends PureComponent {
 
     addComponentCache(key,component){
         this.cache.setValue(key,component);
+        console.dir(component)
         this.storeDom.appendChild(component);
     }
 
@@ -32,8 +34,8 @@ export default class KeepAliveProvider extends PureComponent {
     render() {
         return <KeepAliveContext.Provider value={ {
                 storeDom:this.storeDom,
-                addComponentCache:this.addComponentCache,
-                getComponentCache:this.getComponentCache
+                addComponentCache:this.addComponentCache.bind(this),
+                getComponentCache:this.getComponentCache.bind(this)
             } }>
             { this.props.children }
         </KeepAliveContext.Provider>;
@@ -41,10 +43,10 @@ export default class KeepAliveProvider extends PureComponent {
 }
 
 class ProviderDOM {
-    _dom = null;
+    static _dom = null;
 
     _setDom() {
-        this._dom = createDom();
+        ProviderDOM._dom = createDom();
 
         function createDom() {
             const dom = document.createElement('div');
@@ -55,8 +57,8 @@ class ProviderDOM {
     }
 
     get dom() {
-        if (this._dom === null) this._setDom();
-        return this._dom;
+        if (ProviderDOM._dom === null) this._setDom();
+        return ProviderDOM._dom;
     }
 }
 

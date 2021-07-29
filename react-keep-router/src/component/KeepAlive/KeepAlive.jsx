@@ -1,4 +1,4 @@
-import { useEffect, useMemo, memo } from "react";
+import React,{ useEffect, useMemo, memo } from "react";
 import { useKeepAlive } from "./KeepAliveProvider.jsx";
 
 function KeepAlive({children,cacheKey}){
