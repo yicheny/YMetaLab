@@ -1,28 +1,21 @@
-import React,{ useEffect, useMemo, memo } from "react";
+import React, {useEffect, useMemo, memo, useRef} from "react";
 import { useKeepAlive } from "./KeepAliveProvider.jsx";
 
 function KeepAlive({children,cacheKey}){
-    const {storeDom,getComponentCache,addComponentCache} = useKeepAlive();
-
-    const componentCache = useMemo(()=>{
-        return getComponentCache(cacheKey);
-    },[getComponentCache,cacheKey]);
-
-    const render = componentCache || children;
+    const {updateCache} = useKeepAlive();
+    const containerRef = useRef();
 
     useEffect(()=>{
-        if(componentCache){
-            storeDom.removeChild(componentCache);
-        }
-    },[storeDom,componentCache]);
+        updateCache(cacheKey,children).then(nodeCache => {
+            containerRef.current.appendChild(nodeCache);
+        } );
+    },[
+        updateCache,
+        cacheKey,
+        children
+    ])
 
-    useEffect(()=>{
-        return ()=>{
-            addComponentCache(cacheKey,render)
-        }
-    },[cacheKey,render,addComponentCache])
-
-    return render;
+    return <div ref={containerRef}/>
 }
 
 export default memo(KeepAlive)

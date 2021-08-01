@@ -13,31 +13,47 @@ export default class KeepAliveProvider extends PureComponent {
     constructor(props) {
         super(props);
         this.storeDom = createProvider().dom;
-        this.cache = createCache();
-        console.log('constructor',this.storeDom)
+        this.state = {};//用于保存key和children信息
+        this.nodes = {};//用于保存渲染的DOM
     }
 
-    componentDidMount() {
-        createPortal(this.cache.toValuesArray(),this.storeDom);
-    }
-
-    addComponentCache(key,component){
-        this.cache.setValue(key,component);
-        console.dir(component)
-        this.storeDom.appendChild(component);
-    }
-
-    getComponentCache(key){
-        return this.cache.getValue(key);
+    updateCache = (key,children) => {
+        return new Promise(resolve=>{
+            this.setState({[key]:{key,children}},() => {
+                resolve(this.nodes[key]);
+            })
+        });
     }
 
     render() {
         return <KeepAliveContext.Provider value={ {
-                storeDom:this.storeDom,
-                addComponentCache:this.addComponentCache.bind(this),
-                getComponentCache:this.getComponentCache.bind(this)
+                updateCache:this.updateCache
             } }>
-            { this.props.children }
+            {
+                this.props.children
+            }
+            {
+                <div style={{display:'none'}}>
+                    {
+                        Object.values(this.state).map(({key,children})=>{
+                            return <div key={key} ref={node=>{
+                                this.nodes[key] = node;
+                            }}>
+                                {children}
+                            </div>
+                        })
+                    }
+                </div>
+            }
+            {/*{
+                createPortal(Object.values(this.state).map(({key,children})=>{
+                    return <div key={key} ref={node=>{
+                        this.nodes[key] = node;
+                    }}>
+                        {children}
+                    </div>
+                }),this.storeDom)
+            }*/}
         </KeepAliveContext.Provider>;
     }
 }

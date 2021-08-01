@@ -38,17 +38,3 @@ export default {
 
     ],
 }
-
-// function processSass(context, payload) {
-//     return new Promise(( resolve, reject ) => {
-//         sass.render({
-//             file: context
-//         }, function(err, result) {
-//             if( !err ) {
-//                 resolve(result);
-//             } else {
-//                 reject(err)
-//             }
-//         });
-//     })
-// }

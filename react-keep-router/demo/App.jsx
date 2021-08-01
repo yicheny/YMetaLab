@@ -14,7 +14,7 @@ export default function App(){
                 <Route path='/view/1'><View title='view1'/></Route>
                 <Route path='/view/2'><View title='view2'/></Route>
                 <Route path='/view/keep'>
-                    <KeepAlive>
+                    <KeepAlive cacheKey={'/view/keep'}>
                         <View title='keep'/>
                     </KeepAlive>
                 </Route>
