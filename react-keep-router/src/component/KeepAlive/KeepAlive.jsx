@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, memo, useRef} from "react";
+import React, {useEffect,  memo, useRef} from "react";
 import { useKeepAlive } from "./KeepAliveProvider.jsx";
 
 function KeepAlive({children,cacheKey}){
@@ -7,8 +7,9 @@ function KeepAlive({children,cacheKey}){
 
     useEffect(()=>{
         updateCache(cacheKey,children).then(nodeCache => {
+            // console.log('nodeCache',nodeCache)
             containerRef.current.appendChild(nodeCache);
-        } );
+        });
     },[
         updateCache,
         cacheKey,

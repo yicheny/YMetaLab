@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import './Menu.scss';
 
 const menuConfig = [
-    {text:"view1",to:"/view/1"},
-    {text:"view2",to:"/view/2"},
-    {text:"keepView",to:"/view/keep"},
+    {text:"view1",to:"/app/view1"},
+    {text:"portal-test",to:"/app/portal-test"},
+    {text:"keepView",to:"/app/keep"},
 ]
 
 export default function Menu(){
