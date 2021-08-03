@@ -5,6 +5,7 @@ import Menu from "./Menu.jsx";
 import { KeepAlive, KeepAliveProvider } from '../src/index.jsx';//日常修改测试
 import CounterView from "./Views/CounterView.jsx";
 import PortalTest from "./Views/PortalTest.jsx";
+import EffectTest from "./Views/EffectTest.jsx";
 
 // console.log({KeepAliveProvider,KeepAlive})
 
@@ -15,9 +16,14 @@ export default function App() {
             <Switch>
                 <Route path='/app/view1'><CounterView title='view1'/></Route>
                 <Route path='/app/portal-test'><PortalTest/></Route>
+                <Route path='/app/effect-test'>
+                    <KeepAlive cacheKey='/app/effect-test'>
+                        <EffectTest/>
+                    </KeepAlive>
+                </Route>
 
                 <Route path='/app/keep'>
-                    <KeepAlive cacheKey={ '/view/keep' }>
+                    <KeepAlive cacheKey='/app/keep'>
                         <CounterView title='keep'/>
                     </KeepAlive>
                 </Route>
