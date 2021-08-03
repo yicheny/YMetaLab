@@ -4,7 +4,7 @@ import './Menu.scss';
 
 const menuConfig = [
     {text:"view1",to:"/app/view1"},
-    {text:"portal-test",to:"/app/portal-test"},
+    // {text:"portal-test",to:"/app/portal-test"},
     {text:"keepView",to:"/app/keep"},
 ]
 
