@@ -1,13 +1,14 @@
 import React, { createContext, PureComponent, useContext } from 'react';
 import { LIFE_CYCLE_ENUMS, OBSERVER_STATUS_ENUMS } from "./Enums";
+import { KeepAliveProvider } from "./KeepAliveContext.jsx";
 
-const KeepAliveContext = createContext({});
+const KeepAliveScopeContext = createContext({});
 
-export function useKeepAliveProvider(){
-    return useContext(KeepAliveContext);
+export function useKeepAliveScope(){
+    return useContext(KeepAliveScopeContext);
 }
 
-export default class KeepAliveProvider extends PureComponent {
+export default class KeepAliveScope extends PureComponent {
     constructor(props) {
         super(props);
         this.container = null;
@@ -34,7 +35,7 @@ export default class KeepAliveProvider extends PureComponent {
     }
 
     render() {
-        return <KeepAliveContext.Provider value={ {
+        return <KeepAliveScopeContext.Provider value={ {
                 updateCache:this.updateCache,
                 cacheMap:this.state
             } }>
@@ -44,12 +45,18 @@ export default class KeepAliveProvider extends PureComponent {
             {
                 <div style={{display:'none'}} ref={node => this.container = node}>
                     {
-                        Object.values(this.state).map(({key,children})=>{
-                            return <div key={key} ref={node=>{
-                                this.nodes[key] = node;
-                            }}>
-                                {children}
-                            </div>
+                        Object.values(this.state).map((cache)=>{
+                            const {key,children} = cache;
+                            return (
+                                <div key={key} ref={node=>{
+                                    this.nodes[key] = node;
+                                }}>
+                                    <KeepAliveProvider value={{cache}}>
+                                        {children}
+                                    </KeepAliveProvider>
+                                </div>
+
+                            )
                         })
                     }
                 </div>
@@ -63,7 +70,7 @@ export default class KeepAliveProvider extends PureComponent {
                     </div>
                 }),this.container)
             }*/}
-        </KeepAliveContext.Provider>;
+        </KeepAliveScopeContext.Provider>;
     }
 }
 

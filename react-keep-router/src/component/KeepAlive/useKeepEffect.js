@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useKeepAlive } from "./KeepAlive.jsx";
+import { useKeepAlive } from "./KeepAliveContext.jsx";
 import observer from "./Observer";
 import utils from "./utils";
 import { LIFE_CYCLE_ENUMS, OBSERVER_STATUS_ENUMS } from "./Enums";

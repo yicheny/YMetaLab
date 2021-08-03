@@ -5,11 +5,11 @@
 # 设计
 ## 使用方式
 ```jsx
-<KeepAliveProvider>
+<KeepAliveScope>
     <KeepAlive cacheKey='test'>
         <Test/>
     </KeepAlive>
-</KeepAliveProvider>
+</KeepAliveScope>
 ```
 
 ## 思路

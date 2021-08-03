@@ -1,15 +1,13 @@
-import React, { useEffect, memo, useRef, createContext, useContext } from "react";
-import { useKeepAliveProvider } from "./KeepAliveProvider.jsx";
+import React, { useEffect, memo, useRef } from "react";
+import { useKeepAliveScope } from "./KeepAliveScope.jsx";
 import utils from "./utils";
 import observer from "./Observer";
 import { LIFE_CYCLE_ENUMS, OBSERVER_STATUS_ENUMS } from "./Enums";
 
-const KeepAliveContext = createContext({});
 
-export const useKeepAlive = () => useContext(KeepAliveContext);
 
 function KeepAlive({ children, cacheKey }) {
-    const { updateCache,cacheMap } = useKeepAliveProvider();
+    const { updateCache,cacheMap } = useKeepAliveScope();
     const containerRef = useRef();
 
     const statusCache = cacheMap[cacheKey];
@@ -56,9 +54,7 @@ function KeepAlive({ children, cacheKey }) {
     },[statusCache])
 
     // console.log('statusCache',statusCache)
-    return <KeepAliveContext.Provider value={{cache:statusCache}}>
-        <div ref={ containerRef }/>
-    </KeepAliveContext.Provider>
+    return <div ref={ containerRef }/>
 }
 
 export default memo(KeepAlive)
