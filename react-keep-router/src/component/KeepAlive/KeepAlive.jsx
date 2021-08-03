@@ -6,10 +6,19 @@ function KeepAlive({children,cacheKey}){
     const containerRef = useRef();
 
     useEffect(()=>{
+        let node = null;
+
         updateCache(cacheKey,children).then(nodeCache => {
             // console.log('nodeCache',nodeCache)
+            node = nodeCache;
             containerRef.current.appendChild(nodeCache);
         });
+
+        return ()=>{
+            if(node && containerRef.current){
+                containerRef.current.removeChild(node);
+            }
+        }
     },[
         updateCache,
         cacheKey,
