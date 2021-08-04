@@ -20,10 +20,13 @@ export default function useKeepEffect(callback) {
 
         if(cache.observerStatus === OBSERVER_STATUS_ENUMS.UNLISTEN){
             if(cache.lifeCycle !== LIFE_CYCLE_ENUMS.MOUNT) return ;
-            const mountFun = callbackRef.current;
-            const umountFun = mountFun();
-            observer.add(utils.getMountKey(cacheKey), mountFun);
-            observer.add(utils.getUmountKey(cacheKey), umountFun);
+            let umountFun = callbackRef.current();
+            observer.add(utils.getMountKey(cacheKey), ()=>{
+                umountFun = callbackRef.current()
+            });
+            observer.add(utils.getUmountKey(cacheKey), ()=>{
+                umountFun();
+            });
             cache.observerStatus = OBSERVER_STATUS_ENUMS.LISTEN;
             cache.lifeCycle = LIFE_CYCLE_ENUMS.MOUNTED;
         }

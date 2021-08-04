@@ -32,7 +32,7 @@ function KeepAlive({ children, cacheKey }) {
         children,
     ])
 
-    useEffect(()=>{
+    useEffect(() => {
         if(!utils.isObject(statusCache)) return ;
         const {cacheKey} = statusCache;
         mount();
