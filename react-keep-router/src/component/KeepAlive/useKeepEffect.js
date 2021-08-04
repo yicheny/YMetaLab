@@ -19,6 +19,7 @@ export default function useKeepEffect(callback) {
         const {cacheKey} = cache;
 
         if(cache.observerStatus === OBSERVER_STATUS_ENUMS.UNLISTEN){
+            if(cache.lifeCycle !== LIFE_CYCLE_ENUMS.MOUNT) return ;
             const mountFun = callbackRef.current;
             const umountFun = mountFun();
             observer.add(utils.getMountKey(cacheKey), mountFun);
