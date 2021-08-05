@@ -18,6 +18,13 @@ function createUtils(){
         },
         getUmountKey(k){
             return `${k}_unmount`;
+        },
+        clone(x){
+            return {...x};
+        },
+        //TODO 待实现
+        get(){
+
         }
     }
 

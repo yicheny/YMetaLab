@@ -20,12 +20,12 @@ export default function useKeepEffect(callback) {
 
         if(cache.observerStatus === OBSERVER_STATUS_ENUMS.UNLISTEN){
             if(cache.lifeCycle !== LIFE_CYCLE_ENUMS.MOUNT) return ;
-            let umountFun = callbackRef.current();
+            let unmountFun = callbackRef.current();
             observer.add(utils.getMountKey(cacheKey), ()=>{
-                umountFun = callbackRef.current()
+                unmountFun = callbackRef.current();
             });
             observer.add(utils.getUmountKey(cacheKey), ()=>{
-                umountFun();
+                if(utils.isFunction(unmountFun)) unmountFun();
             });
             cache.observerStatus = OBSERVER_STATUS_ENUMS.LISTEN;
             cache.lifeCycle = LIFE_CYCLE_ENUMS.MOUNTED;

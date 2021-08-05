@@ -5,9 +5,9 @@ export default function EffectTest() {
     const [value,setValue] = useState('initValue');
 
     useKeepEffect(()=>{
-        console.log(`useKeepEffect，副作用执行啦！当前值为${value}`);
+        console.log(`useKeepEffect，组件装载啦！闭包值为${value}`);
         return () => {
-            console.log(`useKeepEffect，组件卸载啦！当前值为${value}`)
+            console.log(`useKeepEffect，组件卸载啦！闭包值为${value}`)
         }
     })
 
