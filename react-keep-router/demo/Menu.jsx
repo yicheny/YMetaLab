@@ -6,7 +6,8 @@ const menuConfig = [
     {text:"view1",to:"/app/view1"},
     // {text:"portal-test",to:"/app/portal-test"},
     {text:"keepView",to:"/app/keep"},
-    {text:"effectText",to:'/app/effect-test'}
+    {text:"effectText",to:'/app/effect-test'},
+    {text:"manyComponentTest",to:'/app/many-component-test'}
 ]
 
 export default function Menu(){

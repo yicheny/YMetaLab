@@ -21,6 +21,13 @@ export default function App() {
                         <EffectTest/>
                     </KeepAlive>
                 </Route>
+                <Route path='/app/many-component-test'>
+                    <KeepAlive cacheKey='/app/many-component-test'>
+                        <EffectTest/>
+                        <EffectTest/>
+                        <EffectTest/>
+                    </KeepAlive>
+                </Route>
 
                 <Route path='/app/keep'>
                     <KeepAlive cacheKey='/app/keep'>
