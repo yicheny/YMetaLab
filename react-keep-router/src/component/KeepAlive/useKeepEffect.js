@@ -33,6 +33,8 @@ export default function useKeepEffect(callback) {
 
         return () => {
             observer.notify(utils.getUmountKey(cacheKey));
+            observer.delete(utils.getMountKey(cacheKey));
+            observer.delete(utils.getUmountKey(cacheKey));
         }
     }, [cache])
 }
