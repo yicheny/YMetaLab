@@ -2,7 +2,6 @@ import React, { useEffect, memo, useRef, useState } from "react";
 import { useKeepAliveScope } from "./KeepAliveScope.jsx";
 import utils from "./utils";
 import observer from "./Observer";
-import { LIFE_CYCLE_ENUMS, OBSERVER_STATUS_ENUMS } from "./Enums";
 
 function KeepAlive({ children, cacheKey }) {
     const { updateCache } = useKeepAliveScope();
@@ -37,19 +36,11 @@ function KeepAlive({ children, cacheKey }) {
         return unmount;
 
         function mount(){
-            // console.log('mount',cacheKey);
-            if(cache.observerStatus !== OBSERVER_STATUS_ENUMS.LISTEN) return ;
-            if(cache.lifeCycle !== LIFE_CYCLE_ENUMS.MOUNT) return ;
             observer.notify(utils.getMountKey(cacheKey));
-            cache.lifeCycle = LIFE_CYCLE_ENUMS.MOUNTED;
         }
 
         function unmount(){
-            // console.log('unmount',cacheKey);
-            if (cache.observerStatus !== OBSERVER_STATUS_ENUMS.LISTEN) return ;
-            if (cache.lifeCycle !== LIFE_CYCLE_ENUMS.MOUNTED) return ;
             observer.notify(utils.getUmountKey(cacheKey));
-            cache.lifeCycle = LIFE_CYCLE_ENUMS.MOUNT;
         }
     },[cache])
 

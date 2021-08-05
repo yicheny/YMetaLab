@@ -5,9 +5,11 @@ class Observer{
         this.list = new Map();
     }
 
-    //TODO:同一个key会有注册多个事件的可能吗？
-    add(key,callback){
-        this.list.set(key,callback);
+    add(key,listener){
+        if(!utils.isFunction(listener)) return ;
+        const listenerList = this._getListeners(key);
+        listenerList.push(listener);
+        this.list.set(key,listenerList);
     }
 
     delete(key){
@@ -15,8 +17,14 @@ class Observer{
     }
 
     notify(key){
-        const callback = this.list.get(key);
-        if(utils.isFunction(callback)) callback();
+        const listenerList = this.list.get(key);
+        if(!Array.isArray(listenerList)) return null;
+        listenerList.forEach(f => f());
+    }
+
+    _getListeners(key){
+        const listenerList = this.list.get(key);
+        return Array.isArray(listenerList) ? listenerList : [];
     }
 }
 

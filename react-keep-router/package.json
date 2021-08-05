@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "rollup --config",
-    "start": "rollup --config rollup.config.dev.js -w"
+    "start": "rollup --config rollup.config.dev.js -w",
+    "publish:patch": "npm version patch && npm publish",
+    "publish:minor": "npm version minor && npm publish",
+    "publish:major": "npm version major && npm publish"
   },
   "author": "ylf",
   "license": "ISC",

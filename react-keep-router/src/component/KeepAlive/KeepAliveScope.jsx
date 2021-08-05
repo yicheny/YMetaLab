@@ -1,5 +1,4 @@
 import React, { createContext, PureComponent, useContext } from 'react';
-import { LIFE_CYCLE_ENUMS, OBSERVER_STATUS_ENUMS } from "./Enums";
 import { KeepAliveProvider } from "./KeepAliveContext.jsx";
 import utils from './utils';
 
@@ -34,8 +33,6 @@ export default class KeepAliveScope extends PureComponent {
                 return {
                     cacheKey,
                     children,
-                    lifeCycle:LIFE_CYCLE_ENUMS.MOUNT,
-                    observerStatus:OBSERVER_STATUS_ENUMS.UNLISTEN
                 }
             }
 

@@ -2,40 +2,37 @@ import { useEffect, useRef } from "react";
 import { useKeepAlive } from "./KeepAliveContext.jsx";
 import observer from "./Observer";
 import utils from "./utils";
-import { LIFE_CYCLE_ENUMS, OBSERVER_STATUS_ENUMS } from "./Enums";
 
 export default function useKeepEffect(callback) {
-    const value = useKeepAlive();
-    const cache = value.cache;
+    const {cache} = useKeepAlive();
 
     const callbackRef = useRef(() => {});
     callbackRef.current = callback;
-
-    // console.log('value',value);
 
     useEffect(() => {
         if(!utils.isObject(cache)) return ;
 
         const {cacheKey} = cache;
+        let mounted = false;
 
-        if(cache.observerStatus === OBSERVER_STATUS_ENUMS.UNLISTEN){
-            if(cache.lifeCycle !== LIFE_CYCLE_ENUMS.MOUNT) return ;
+        if(!mounted){
             let unmountFun = callbackRef.current();
+            mounted = true;
             observer.add(utils.getMountKey(cacheKey), ()=>{
+                if(mounted) return ;
                 unmountFun = callbackRef.current();
+                mounted = true;
             });
             observer.add(utils.getUmountKey(cacheKey), ()=>{
-                if(utils.isFunction(unmountFun)) unmountFun();
+                if(!mounted) return ;
+                if(!utils.isFunction(unmountFun)) return null;
+                unmountFun();
+                mounted = false;
             });
-            cache.observerStatus = OBSERVER_STATUS_ENUMS.LISTEN;
-            cache.lifeCycle = LIFE_CYCLE_ENUMS.MOUNTED;
         }
 
         return () => {
-            if(cache.observerStatus !== OBSERVER_STATUS_ENUMS.LISTEN) return null;
-            if(cache.lifeCycle !== LIFE_CYCLE_ENUMS.MOUNTED) return null;
             observer.notify(utils.getUmountKey(cacheKey));
-            cache.lifeCycle = LIFE_CYCLE_ENUMS.MOUNT;
         }
     }, [cache])
 }
