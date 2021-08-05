@@ -5,7 +5,7 @@ import { uglify } from 'rollup-plugin-uglify'
 
 export default [
     {
-        input: 'src/index.jsx',
+        input: 'src/index.js',
         output: {
             name: 'keepRouter',
             file: 'lib/index.js',

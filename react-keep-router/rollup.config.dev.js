@@ -6,7 +6,7 @@ import livereload from "rollup-plugin-livereload";
 import postcss from 'rollup-plugin-postcss';
 
 export default {
-    input:'demo/index.jsx',
+    input:'demo/index.js',
     output:{
         file:'dist/bundle.cjs.js',
         format:'cjs',
