@@ -5,16 +5,16 @@ export default function EffectTest() {
     const [value,setValue] = useState(0);
 
     useKeepEffect(()=>{
-        console.log(`useKeepEffect，副作用执行啦！闭包值为${value}`);
+        console.log(`useKeepEffect，Active！闭包值为${value}`);
         return () => {
-            console.log(`useKeepEffect，组件卸载啦！闭包值为${value}`)
+            console.log(`useKeepEffect，unActive！闭包值为${value}`)
         }
     })
 
     // useEffect(()=>{
-    //     console.log(`副作用执行啦！当前值为${value}`);
+    //     console.log(`EffectTest 副作用执行啦！当前值为${value}`);
     //     return () => {
-    //         console.log(`组件卸载啦！当前值为${value}`)
+    //         console.log(`EffectTest 副作用卸载啦！当前值为${value}`)
     //     }
     // },[value])
 
