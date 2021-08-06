@@ -34,9 +34,9 @@
 用法示例：
 ```js
 useKeepEffect(()=>{
-    console.log(`useKeepEffect，组件装载啦！闭包值为${value}`);
+    console.log(`useKeepEffect，Active！闭包值为${value}`);
     return () => {
-        console.log(`useKeepEffect，组件卸载啦！闭包值为${value}`)
+        console.log(`useKeepEffect，unActive！闭包值为${value}`)
     }
 })
 ```
