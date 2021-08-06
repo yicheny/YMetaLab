@@ -6,6 +6,7 @@ import { KeepAlive, KeepAliveScope } from '../src';//日常修改测试
 import CounterView from "./Views/CounterView.jsx";
 import PortalTest from "./Views/PortalTest.jsx";
 import EffectTest from "./Views/EffectTest.jsx";
+import ContextTest from "./Views/ContextTest.jsx";
 
 // console.log({KeepAliveScope,KeepAlive})
 
@@ -28,6 +29,7 @@ export default function App() {
                         <EffectTest/>
                     </KeepAlive>
                 </Route>
+                <Route path='/app/context-test' component={ContextTest}/>
 
                 <Route path='/app/keep'>
                     <KeepAlive cacheKey='/app/keep'>
