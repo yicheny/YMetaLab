@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from "react-router-dom";
+import React from 'react';
 import clsx from 'clsx';
 import "./Menu.scss";
 
-// const mockOption = Array.from(Array(40),(x,i)=>({text:i,to:i}));
+// const mockOption = Array.from(Array(40),(x,i)=>({text:i,value:i}));
 
-export default function Menu({option}) {
-    const history = useHistory();
-    const location = useLocation();
-    const [currentPath,setCurrentPath] = useState(location.pathname);
-
-    useEffect(()=>{
-        return history.listen((location)=>{
-            setCurrentPath(location.pathname)
-        });
-    },[history])
-
+export default function Menu({options,onChange,value}) {
     return <div className="doc-menu">
         {
-            option.map((x)=>{
-                return <div key={x.to}
-                            className={clsx('doc-menu-item',{active:x.to===currentPath})}
-                            onClick={()=>history.push(x.to)}>
+            options.map((x)=>{
+                return <div key={x.value}
+                            className={clsx('doc-menu-item',{active:x.value===value})}
+                            onClick={()=>onChange && onChange(x.value)}>
                     {x.text}
                 </div>
             })
@@ -29,5 +18,5 @@ export default function Menu({option}) {
     </div>
 };
 Menu.defaultProps = {
-
+    options:[]
 }
