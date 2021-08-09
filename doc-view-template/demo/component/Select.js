@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import './Select.scss'
 
 export default function Select({ options, style, className, onChange, defaultValue }) {
-    const [searchText, setSearchText] = useState();
+    const [searchText, setSearchText] = useState('');
     const [selected, setSelected] = useState(defaultValue);
     const [unfold, setUnfold] = useState(false);
     const containerRef = useRef();
@@ -14,12 +14,12 @@ export default function Select({ options, style, className, onChange, defaultVal
     }, [options, selected])
 
     const renderOptions = useMemo(() => {
-        return options;
-        // if (['', null, undefined].includes(searchText)) return options;
-        // const ss = searchText.toLowerCase();
-        // return options.filter(x => {
-        //     return x.text.toLowerCase().includes(ss)
-        // });
+        // return options;
+        if (['', null, undefined].includes(searchText)) return options;
+        const ss = searchText.toLowerCase();
+        return options.filter(x => {
+            return x.text.toLowerCase().includes(ss)
+        });
     }, [options, searchText]);
 
     const close = useCallback(()=>{
@@ -40,7 +40,10 @@ export default function Select({ options, style, className, onChange, defaultVal
                 onChange={ e => {
                     setSearchText(e.target.value);
                 } }>
-        <input className="doc-select-input" defaultValue={ selectText } key={selected}/>
+        <input className="doc-select-input" value={ unfold ? searchText : selectText }
+               onChange={(e)=>{
+                   if(unfold) setSearchText(e.target.value);
+               }}/>
         <div className="doc-select-box">
             {
                 renderOptions.map(x => {
@@ -80,8 +83,3 @@ export function useOnClickOutside(ref, handler) {
         [ref, handler]
     );
 }
-
-// function useInputKey(){
-//     return useReducer(x=>x+1,0);
-// }
-
