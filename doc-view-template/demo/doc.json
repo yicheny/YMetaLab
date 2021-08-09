@@ -1,0 +1,12 @@
+{
+  "docs": [
+    {
+      "name": "Menu",
+      "path": "./Menu.md"
+    },
+    {
+      "name": "test-doc",
+      "path": "./test-doc.md"
+    }
+  ]
+}

@@ -42,7 +42,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: "doc-view-template",
-            template: './index.html'
+            template: './index.js.html'
         }),
         new CleanWebpackPlugin()
     ]
