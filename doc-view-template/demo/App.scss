@@ -1,6 +1,28 @@
 .app{
-  margin:32px 32px;
-  padding: 16px;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+
+  &-menu{
+    width:300px;
+    padding:24px 16px;
+    .doc-menu{
+      width:100%;
+      height:100%;
+    }
+  }
+
+  &-content{
+    flex:1;
+    overflow: auto;
+  }
+}
+
+.y-markdown{
+  margin:16px 24px;
+  padding: 16px 24px;
   border:1px solid #eaecef;
   background: white;
   border-radius:4px;

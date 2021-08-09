@@ -1,0 +1,17 @@
+@import "../colors";
+
+.doc-menu{
+  overflow: auto;
+  &-item{
+    &:hover{
+      color:$primary
+    }
+    &.active{
+      color:#fff;
+      background: skyblue;
+    }
+    padding:8px 16px;
+    cursor:pointer;
+    transition: 150ms all ease-in;
+  }
+}
