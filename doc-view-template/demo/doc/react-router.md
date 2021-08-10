@@ -1,3 +1,5 @@
+# 从`SPA`谈起
+
 `single-page application`（single-page application）单页面应用就是一个网站只有一个页面，切换url实质上是切换组件。
 
 这种做法的好处是我们不需要一次性将所有页面都进行加载，节省了内存和提升了速度。
@@ -25,7 +27,7 @@
 - `react-router` 5.12.0
 - `history` 4.9.0
 
-# 从基本用法谈起
+# 从基本用法起步
 ```jsx
 <HashRouter>
     <Menu/> {/*菜单部分*/}

@@ -3,16 +3,23 @@
 .doc-anchor{
   &-item{
     &:hover{
-      color:rgba(0,0,255,0.64);
-      transform: scale(1.08);
-      background: rgba(255,255,255,1);
-      border-radius: 2px;
+      >.text{
+        color:rgba(0,0,255,0.64);
+        transform: scale(1.08);
+        background: rgba(255,255,255,1);
+        border-radius: 8px;
+      }
     }
-    color:rgba(30,144,255,1);
     cursor:pointer;
-    padding:3px 6px;
-    font-size: 14px;
-    user-select: none;
-    white-space: nowrap;
+
+    >.text{
+      display: inline-block;
+      color:rgba(30,144,255,1);
+      padding:3px 6px;
+      font-size: 14px;
+      user-select: none;
+      white-space: nowrap;
+      transition: 132ms all ease-in;
+    }
   }
 }

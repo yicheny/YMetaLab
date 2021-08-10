@@ -7,8 +7,8 @@ export default function Anchor({options,indent}){
             options.map(o=>{
                 return <div className='doc-anchor-item' key={o.id}
                             onClick={()=>handleClick(o.id)}
-                            style={{marginLeft:indent * o.level}}>
-                    {o.text}
+                            style={{paddingLeft:indent * o.level}}>
+                    <span className="text">{o.text}</span>
                 </div>
             })
         }
@@ -16,7 +16,7 @@ export default function Anchor({options,indent}){
 
     function handleClick(id){
         const element = document.getElementById(id);
-        if(element) element.scrollIntoView(false);
+        if(element) element.scrollIntoView({behavior:"smooth"});
     }
 }
 Anchor.defaultProps = {
