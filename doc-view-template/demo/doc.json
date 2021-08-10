@@ -7,6 +7,10 @@
     {
       "name": "test-doc",
       "path": "./test-doc.md"
+    },
+    {
+      "name": "react-router",
+      "path": "./react-router.md"
     }
   ]
 }
