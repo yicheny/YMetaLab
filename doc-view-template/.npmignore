@@ -1,7 +1,3 @@
 node_modules
-demo
-doc
-.npmignore
 .idea
-rollup.config.dev.js
-package-lock.json
+demo/doc
