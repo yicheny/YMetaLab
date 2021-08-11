@@ -22,10 +22,12 @@ function MenuArea() {
     const [value, setValue] = useState(location.pathname);
 
     const options = useMemo(() => {
-        return docs.map(x => ({
-            text: x.name,
-            value: `/${ x.name }`,
-        }))
+        return docs
+            .map(x => ({
+                text: x.name,
+                value: `/${ x.name }`,
+            }))
+            // .concat(Array.from(Array(100), (x, i) => ({ text: i + 4, value: Math.random() })))
     }, [docs])
 
     useEffect(() => {
@@ -85,7 +87,7 @@ function View({ docPath }) {
         <Markdown onMarked={ handleMarked }>
             { readDoc(docPath).default }
         </Markdown>
-        <Anchor options={anchorOption}/>
+        <Anchor options={ anchorOption }/>
     </Fragment>;
 }
 
