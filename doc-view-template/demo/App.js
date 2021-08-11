@@ -4,8 +4,13 @@ import { Markdown } from "y-markdown/lib";
 import "./App.scss";
 import { Anchor, Menu, Select } from "./component";
 
-const readDoc = require.context('./doc', false, /.md$/);
 const { docs } = require("./doc.json");
+const readDoc = require.context('./doc', false, /.md$/);//注：这个路径必须是写死的
+
+// console.log(require('../../react-keep-router/README.md'));
+// const readExtraDoc = require.context('../../react-keep-router',false,/.md$/);
+// const extraDoc = readExtraDoc('./README.md');
+// console.log('extraDoc',extraDoc)
 
 function App() {
     return <div className="app">
