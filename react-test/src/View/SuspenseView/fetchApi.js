@@ -27,9 +27,9 @@ function wrapPromise(promise) {
 
 function fetchCore(url,time=1500) {
     return new Promise((resolve) => {
-        console.log("fetch start...");
+        // console.log("fetch start...");
         setTimeout(() => {
-            console.log("fetch resolve...");
+            // console.log("fetch resolve...");
             resolve({
                 info:`mockInfo：${url}`
             });
