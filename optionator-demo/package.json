@@ -6,9 +6,10 @@
     "optionator-demo": "./bin/index.js"
   },
   "scripts": {
-    "run -h": "optionator-demo --help",
-    "run -v": "optionator-demo -v",
-    "run -s": "optionator-demo -s=./test/importFresh/fixtures/foo.js"
+    "run help": "optionator-demo --help",
+    "run version": "optionator-demo -v",
+    "run script": "optionator-demo -s=./test/importFresh/fixtures/foo.js",
+    "run debug": "optionator-demo --debug"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "chai": "^4.3.4",
+    "debug": "^4.3.1",
     "mocha": "^9.1.1"
   }
 }

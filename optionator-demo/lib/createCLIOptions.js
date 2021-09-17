@@ -24,7 +24,13 @@ function createCLIOptions(){
                 alias: "s",
                 type:'String',
                 description: 'Execute script according to file path'
-            }
+            },
+            {
+                option: "debug",
+                type: "Boolean",
+                default: false,
+                description: "Output debugging information"
+            },
         ]
     })
 }
