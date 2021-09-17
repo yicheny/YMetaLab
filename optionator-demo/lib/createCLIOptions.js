@@ -20,16 +20,10 @@ function createCLIOptions(){
                 description: "Output the version number"
             },
             {
-                option:'name',
-                alias:"n",
+                option:'script',
+                alias: "s",
                 type:'String',
-                default:'defaultName',
-                description:"please give me a name"
-            },
-            {
-                option:'age',
-                type:'number',
-                description: 'please give me a age'
+                description: 'Execute script according to file path'
             }
         ]
     })

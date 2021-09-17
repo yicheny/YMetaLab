@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 const cli = require("../lib/cli");
+const log = require("../lib/log");
 
 (function main(){
-    return cli.execute(process.argv)
+    cli.execute(process.argv);
+    return process.exit();
 }()).catch(error => {
-    console.log('optionator-demo error：' + error.message)
+    log.error('optionator-demo error：' + error.message)
 })

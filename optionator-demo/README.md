@@ -4,3 +4,4 @@
 
 进行测试的库：
 - [x] `optionator`
+- [x] `importFresh`
