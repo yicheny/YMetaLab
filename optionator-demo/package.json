@@ -9,7 +9,8 @@
     "run help": "optionator-demo --help",
     "run version": "optionator-demo -v",
     "run script": "optionator-demo -s=./test/importFresh/fixtures/foo.js",
-    "run debug": "optionator-demo --debug"
+    "run debug": "optionator-demo --debug",
+    "run _": "optionator-demo --debug a b c d"
   },
   "author": "",
   "license": "ISC",
