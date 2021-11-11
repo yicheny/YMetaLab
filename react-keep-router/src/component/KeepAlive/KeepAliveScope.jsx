@@ -49,6 +49,8 @@ export default class KeepAliveScope extends PureComponent {
     }
 
     render() {
+        // console.log('state',this.state);
+        // console.log('nodes',this.nodes);
         return <KeepAliveScopeContext.Provider value={ {
                 updateCache:this.updateCache,
                 cacheMap:this.state
