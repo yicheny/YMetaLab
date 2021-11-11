@@ -2,7 +2,10 @@
 function createUtils(){
     return {
         isNil(x){
-            return x === undefined || x === null;
+            return typeof x === 'undefined' || x === null;
+        },
+        isUndefined(x){
+            return typeof x === 'undefined'
         },
         isFunction(x){
             return typeof x === 'function';
