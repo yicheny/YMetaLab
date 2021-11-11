@@ -1,6 +1,15 @@
 .menu{
+  width:200px;
+  border-right:1px solid rgba(0,0,0,0.1);
   .item{
-    color:red;
-    margin:0 8px;
+    margin:8px 12px;
+    &.active{
+      >a{
+        color:red;
+      }
+    }
+    >a{
+      text-decoration: none;
+    }
   }
 }

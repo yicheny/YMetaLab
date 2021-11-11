@@ -20,6 +20,7 @@ function KeepAlive({ children, cacheKey }) {
 
         return () => {
             if (node && containerRef.current) {
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 containerRef.current.removeChild(node);
             }
         }

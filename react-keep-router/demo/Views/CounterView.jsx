@@ -1,10 +1,13 @@
 import React,{useState} from 'react';
 
 export default function CounterView(props){
-    return <div>
+    return <>
         <h2>标题：{props.title}</h2>
         <Counter/>
-    </div>
+    </>
+}
+CounterView.defaultProps = {
+    title:'默认'
 }
 
 function Counter(){
