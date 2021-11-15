@@ -1,4 +1,4 @@
-function createLRU(limit=100) {
+export function createLRU(limit=100) {
     const _cacheMap = new Map();
     const _cacheLinkedList = new LinkedList(limit);
 
@@ -17,9 +17,17 @@ function createLRU(limit=100) {
     }
 
     return {
-        update
+        update,
+        get cacheMap(){
+            return _cacheMap;
+        },
+        get cacheLinkedList(){
+            return _cacheLinkedList;
+        }
     }
 }
+
+const NODE_MSG = 'node必须是LinkedListNode类型！'
 
 export class LinkedList {
     constructor(limit) {
@@ -34,6 +42,7 @@ export class LinkedList {
     }
 
     append() {
+
     }
 
     /*
@@ -47,10 +56,11 @@ export class LinkedList {
         if (this.size === 0) {
             newNode = new LinkedListNode(data, null, null);
             this._setHead(newNode);
-            this._setTail(newNode)
+            this._setTail(newNode);
         } else {
+            checkNode(node);
             newNode = new LinkedListNode(data, node.prev, node);
-            node.setPrev(newNode)
+            node.setPrev(newNode);
             if(node === this.head) this._setHead(newNode);
         }
         this._size.increase();
@@ -58,7 +68,14 @@ export class LinkedList {
     }
 
     moveToHead(node) {
-        if (node === this.tail) this._setTail(node.prev);
+        checkNode(node);
+        if (node === this.head) return ;
+        if (node === this.tail) {
+            this._setTail(node.prev);
+        }else{
+            node.prev.setNext(node.next);
+            node.next.setPrev(node.prev);
+        }
         node.setPrev(null)
         node.setNext(this.head)
         this.head.setPrev(node);
@@ -83,9 +100,18 @@ export class LinkedList {
         this._size.decrease();
     }
 
+    _deleteOnlyOne(){
+        this._head = null;
+        this._tail = null;
+        this._size.decrease();
+    }
+
     delete(node) {
-        if(node === this.tail) return this._deleteTail();
+        checkNode(node);
+        this._checkSize("size为0，不能进行删除！")
+        if(this.size === 1) return this._deleteOnlyOne();
         if(node === this.head) return this._deleteHead();
+        if(node === this.tail) return this._deleteTail();
         this._deleteNormalNode(node);
     }
 
@@ -107,6 +133,10 @@ export class LinkedList {
 
     _setTail(node){
         this._tail = node;
+    }
+
+    _checkSize(msg){
+        if(this.size === 0) throw new Error(msg)
     }
 }
 
@@ -174,4 +204,8 @@ function isNumber(v){
 
 function checkLimit(limit){
     if(!(isNumber(limit) && limit > 0)) throw new Error('必须提供limit参数，且必须是大于0的数字！')
+}
+
+function checkNode(node){
+    if(!(node instanceof LinkedListNode)) throw new Error(NODE_MSG)
 }
