@@ -1,11 +1,11 @@
 const assert = require('chai').assert;
-const { LinkedList, LinkedListNode } = require('./createLRU');
+const { LinkedList, LinkedListNode, createLRU } = require('./createLRU');
 
 const LIMIT_MSG = '必须提供limit参数，且必须是大于0的数字！'
 const SIZE_OVERFLOW_MSG = 'size值不能超过最大值！'
 const NODE_MSG = 'node必须是LinkedListNode类型！'
 
-describe("createLRU模块测试", () => {
+describe("createLRU相关模块测试", () => {
     describe('LinkedList测试', () => {
         describe('参数limit测试', () => {
             it('limit标准声明', () => {
@@ -182,6 +182,45 @@ describe("createLRU模块测试", () => {
                 assert.equal(node1.prev,node3);
                 assert.equal(node3.next,node1)
             })
+        })
+    })
+
+    describe('createLRU测试',()=>{
+        it("返回值测试",()=>{
+            const lru = createLRU(1);
+            assert.isFunction(lru.update)
+            assert.instanceOf(lru.cacheLinkedList,LinkedList)
+        })
+
+        it("更新数据不存在，未溢出",()=>{
+            const lru = createLRU(2);
+            const data = {text:'data'}
+            const data2 = {text:'data2'}
+            lru.update(data);
+            lru.update(data2);
+            assert.equal(lru.cacheLinkedList.head.data,data2)
+            assert.equal(lru.cacheLinkedList.tail.data,data)
+        })
+
+        it("更新数据不存在，溢出",()=>{
+            const lru = createLRU(1);
+            const data = {text:'data'}
+            const data2 = {text:'data2'}
+            lru.update(data);
+            lru.update(data2);
+            assert.equal(lru.cacheLinkedList.head.data,data2)
+            assert.equal(lru.cacheLinkedList.tail.data,data2)
+        })
+
+        it("更新数据存在，在将对应节点移至头部",()=>{
+            const lru = createLRU(3);
+            const data = {text:'data'}
+            const data2 = {text:'data2'}
+            lru.update(data);
+            lru.update(data2);
+            lru.update(data);
+            assert.equal(lru.cacheLinkedList.head.data,data)
+            assert.equal(lru.cacheLinkedList.tail.data,data2)
         })
     })
 })

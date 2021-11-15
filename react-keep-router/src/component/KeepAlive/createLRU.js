@@ -10,17 +10,15 @@ export function createLRU(limit=100) {
     function update(data) {
         const node = _cacheMap.get(data);
         if (node) return _cacheLinkedList.moveToHead(node);
+        if (_cacheMap.size >= limit) {
+            _cacheMap.delete(_cacheLinkedList.tail.data);
+            _cacheLinkedList.delete(_cacheLinkedList.tail)
+        }
         _cacheMap.set(data, _cacheLinkedList.prepend(_cacheLinkedList.head, data));
-        if (_cacheMap.size <= limit) return;
-        _cacheMap.delete(_cacheLinkedList.tail.data);
-        _cacheLinkedList.delete(_cacheLinkedList.tail)
     }
 
     return {
         update,
-        get cacheMap(){
-            return _cacheMap;
-        },
         get cacheLinkedList(){
             return _cacheLinkedList;
         }
