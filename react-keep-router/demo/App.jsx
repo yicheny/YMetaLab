@@ -31,40 +31,64 @@ const menuConfig = [
 ]
 
 export default function App() {
-    return <Router>
-        <KeepAliveScope>
-            <div className="app">
-                <Menu config={menuConfig}/>
-                <div className="content">
-                    <Switch>
-                        <Route path='/app/no-cache'><CounterView title='无缓存测试'/></Route>
-                        <Route path='/app/portal-test'><PortalTest/></Route>
-                        <Route path='/app/effect-test'>
-                            <KeepAlive cacheKey='/app/effect-test'>
-                                <EffectTest/>
-                            </KeepAlive>
-                        </Route>
-                        <Route path='/app/many-component-test'>
-                            <KeepAlive cacheKey='/app/many-component-test'>
-                                <EffectTest/>
-                                <EffectTest/>
-                                <EffectTest/>
-                            </KeepAlive>
-                        </Route>
-                        <Route path='/app/context-test' component={ContextTest}/>
+    return <ErrorBoundary>
+        <Router>
+            <KeepAliveScope>
+                <div className="app">
+                    <Menu config={menuConfig}/>
+                    <div className="content">
+                        <Switch>
+                            <Route path='/app/no-cache'><CounterView title='无缓存测试'/></Route>
+                            <Route path='/app/portal-test'><PortalTest/></Route>
+                            <Route path='/app/effect-test'>
+                                <KeepAlive cacheKey='/app/effect-test'>
+                                    <EffectTest/>
+                                </KeepAlive>
+                            </Route>
+                            <Route path='/app/many-component-test'>
+                                <KeepAlive cacheKey='/app/many-component-test'>
+                                    <EffectTest/>
+                                    <EffectTest/>
+                                    <EffectTest/>
+                                </KeepAlive>
+                            </Route>
+                            <Route path='/app/context-test' component={ContextTest}/>
 
-                        <Route path='/app/keep'>
-                            <KeepAlive cacheKey='/app/keep'>
-                                <CounterView title='keep'/>
-                            </KeepAlive>
-                        </Route>
+                            <Route path='/app/keep'>
+                                <KeepAlive cacheKey='/app/keep'>
+                                    <CounterView title='keep'/>
+                                </KeepAlive>
+                            </Route>
 
-                        <Route path='/app/keep-route' component={KeepRouteView}/>
+                            <Route path='/app/keep-route' component={KeepRouteView}/>
 
-                        <Route>Home</Route>
-                    </Switch>
+                            <Route>Home</Route>
+                        </Switch>
+                    </div>
                 </div>
-            </div>
-        </KeepAliveScope>
-    </Router>
+            </KeepAliveScope>
+        </Router>
+    </ErrorBoundary>
+}
+
+import {PureComponent,Fragment} from "react";
+
+class ErrorBoundary extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {error: null};
+    }
+
+    static getDerivedStateFromError(error) {
+        return {error};
+    }
+
+    componentDidCatch(error, errorInfo) {
+        console.log(error,errorInfo)
+    }
+
+    render() {
+        if (this.state.error) return <pre style={{color: 'red', whiteSpace: 'pre-wrap'}}>{this.state.error}</pre>;
+        return <Fragment>{this.props.children}</Fragment>;
+    }
 }

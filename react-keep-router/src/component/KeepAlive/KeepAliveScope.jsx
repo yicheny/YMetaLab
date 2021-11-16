@@ -1,6 +1,7 @@
 import React, { createContext, PureComponent, useContext } from 'react';
 import { KeepAliveProvider } from "./KeepAliveContext.jsx";
 import utils from './utils';
+import { createLRU } from "./createLRU";
 
 const KeepAliveScopeContext = createContext({});
 
@@ -8,52 +9,60 @@ export function useKeepAliveScope(){
     return useContext(KeepAliveScopeContext);
 }
 
+const lru = createLRU(2);
+
 export default class KeepAliveScope extends PureComponent {
     constructor(props) {
         super(props);
         this.container = null;
         // this.container = createContainer();
 
-        this.state = {};//用于保存key和children信息
-        this.nodes = {};//用于保存渲染的DOM
+        //用于保存key和children信息
+        this.store = new Map();
+        //用于保存渲染的DOM
+        this.nodes = new Map();
     }
 
     updateCache = (cacheKey,children) => {
-        const getNextCache = () => {
+        const updateCache = () => {
             const isOldCache = () => {
-                const cache = this.state[cacheKey];
+                const cache = this.store.get(cacheKey)
                 if(utils.isObject(cache)) return cache.children === children
+                return false;
             }
 
             const getOldCache = () => {
-                return this.state[cacheKey]
+                return this.store.get(cacheKey)
             }
 
             const createNewCache = () => {
-                return {
+                const newCache = {
                     cacheKey,
                     children,
-                }
+                };
+
+                this.store.set(cacheKey,newCache);
+                return newCache
             }
 
-            return {
-                [cacheKey]: isOldCache() ? getOldCache() : createNewCache()
-            }
+            return isOldCache() ? getOldCache() : createNewCache()
         }
 
         return new Promise(resolve=>{
-            this.setState(getNextCache(),() => {
-                resolve([this.nodes[cacheKey],this.state[cacheKey]]);
-            });
+            updateCache();
+            const deleteKey = lru.update(cacheKey);
+            this.forceUpdate(()=>{
+                resolve(this.nodes.get(cacheKey),this.store.get(cacheKey))
+            })
         });
     }
 
     render() {
         // console.log('state',this.state);
         // console.log('nodes',this.nodes);
+        // const renderStore = [...this.store.values()].filter(x=>lru.cacheMap.has(x.cacheKey))
         return <KeepAliveScopeContext.Provider value={ {
                 updateCache:this.updateCache,
-                cacheMap:this.state
             } }>
             {
                 this.props.children
@@ -61,17 +70,17 @@ export default class KeepAliveScope extends PureComponent {
             {
                 <div style={{display:'none'}} ref={node => this.container = node}>
                     {
-                        Object.values(this.state).map((cache)=>{
+                        [...this.store.values()].map((cache)=>{
+                            // const cache = this.store.get(key);
                             const {cacheKey,children} = cache;
                             return (
                                 <div key={cacheKey} ref={node=>{
-                                    this.nodes[cacheKey] = node;
+                                    this.nodes.set(cacheKey,node);
                                 }}>
                                     <KeepAliveProvider value={{cache}}>
-                                        {children}
+                                        {lru.cacheMap.has(cacheKey) ? children : null}
                                     </KeepAliveProvider>
                                 </div>
-
                             )
                         })
                     }

@@ -206,10 +206,12 @@ describe("createLRU相关模块测试", () => {
             const lru = createLRU(1);
             const data = {text:'data'}
             const data2 = {text:'data2'}
-            lru.update(data);
-            lru.update(data2);
+            const deleteKey1 = lru.update(data);
+            const deleteKey2 = lru.update(data2);
             assert.equal(lru.cacheLinkedList.head.data,data2)
             assert.equal(lru.cacheLinkedList.tail.data,data2)
+            assert.isUndefined(deleteKey1);
+            assert.equal(deleteKey2,data);
         })
 
         it("更新数据存在，在将对应节点移至头部",()=>{

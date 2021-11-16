@@ -4,23 +4,29 @@ export function createLRU(limit=100) {
 
     /*
     * update 更新缓存数据
-    * @param {any} data 数据
-    * @returns {void} 无返回值
+    * @param {any} data 数据【同时作为键使用】
+    * @returns {any} deleteKey 删除的数据【键】 如果没有删除，则返回undefined
     * */
     function update(data) {
         const node = _cacheMap.get(data);
         if (node) return _cacheLinkedList.moveToHead(node);
+        let deleteKey;
         if (_cacheMap.size >= limit) {
+            deleteKey = _cacheLinkedList.tail.data
             _cacheMap.delete(_cacheLinkedList.tail.data);
             _cacheLinkedList.delete(_cacheLinkedList.tail)
         }
         _cacheMap.set(data, _cacheLinkedList.prepend(_cacheLinkedList.head, data));
+        return deleteKey;
     }
 
     return {
         update,
         get cacheLinkedList(){
             return _cacheLinkedList;
+        },
+        get cacheMap(){
+            return _cacheMap;
         }
     }
 }
