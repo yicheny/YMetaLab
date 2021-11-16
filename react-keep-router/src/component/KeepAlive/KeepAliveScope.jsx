@@ -53,6 +53,10 @@ export default class KeepAliveScope extends PureComponent {
             const deleteKey = lru.update(cacheKey);
             this.forceUpdate(()=>{
                 resolve(this.nodes.get(cacheKey),this.store.get(cacheKey))
+                // console.log('this.nodes1',this.nodes);
+                if(this.nodes.get(deleteKey)) return ;//如果节点存在，则不能删除键
+                this.nodes.delete(deleteKey)
+                // console.log('this.nodes2',this.nodes);
             })
         });
     }
@@ -73,12 +77,13 @@ export default class KeepAliveScope extends PureComponent {
                         [...this.store.values()].map((cache)=>{
                             // const cache = this.store.get(key);
                             const {cacheKey,children} = cache;
+                            const isExist = lru.cacheMap.has(cacheKey);
                             return (
                                 <div key={cacheKey} ref={node=>{
-                                    this.nodes.set(cacheKey,node);
+                                    isExist && this.nodes.set(cacheKey,node);
                                 }}>
                                     <KeepAliveProvider value={{cache}}>
-                                        {lru.cacheMap.has(cacheKey) ? children : null}
+                                        {isExist ? children : null}
                                     </KeepAliveProvider>
                                 </div>
                             )

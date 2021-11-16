@@ -16,7 +16,7 @@ function KeepAlive({ children, cacheKey }) {
             node = nodeCache;
             setCache(statusCache);
             if(node && containerRef.current){
-                containerRef.current.appendChild(nodeCache);
+                containerRef.current.appendChild(node);
             }
         });
 
