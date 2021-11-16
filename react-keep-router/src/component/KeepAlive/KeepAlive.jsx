@@ -12,8 +12,8 @@ function KeepAlive({ children, cacheKey }) {
         if(!utils.isString(cacheKey)) throw new Error("cacheKey必须是字符类型！")
 
         let node = null;
-        updateCache(cacheKey, children).then((nodeCache,statusCache) => {
-            node = nodeCache;
+        updateCache(cacheKey, children).then((statusCache) => {
+            node = statusCache.node;
             setCache(statusCache);
             if(node && containerRef.current){
                 containerRef.current.appendChild(node);

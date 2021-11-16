@@ -1,15 +1,14 @@
 import React, { createContext, PureComponent, useContext } from 'react';
+// import ReactDOM from 'react-dom'
 import { KeepAliveProvider } from "./KeepAliveContext.jsx";
 import utils from './utils';
 import { createLRU } from "./createLRU";
 
 const KeepAliveScopeContext = createContext({});
 
-export function useKeepAliveScope(){
+export function useKeepAliveScope() {
     return useContext(KeepAliveScopeContext);
 }
-
-const lru = createLRU(2);
 
 export default class KeepAliveScope extends PureComponent {
     constructor(props) {
@@ -17,17 +16,17 @@ export default class KeepAliveScope extends PureComponent {
         this.container = null;
         // this.container = createContainer();
 
-        //用于保存key和children信息
+        this.lru = createLRU(2);
+
+        //保存key、children、node【DOM】
         this.store = new Map();
-        //用于保存渲染的DOM
-        this.nodes = new Map();
     }
 
-    updateCache = (cacheKey,children) => {
+    updateCache = (cacheKey, children) => {
         const updateCache = () => {
             const isOldCache = () => {
                 const cache = this.store.get(cacheKey)
-                if(utils.isObject(cache)) return cache.children === children
+                if (utils.isObject(cache)) return cache.children === children
                 return false;
             }
 
@@ -41,65 +40,75 @@ export default class KeepAliveScope extends PureComponent {
                     children,
                 };
 
-                this.store.set(cacheKey,newCache);
+                this.store.set(cacheKey, newCache);
                 return newCache
             }
 
             return isOldCache() ? getOldCache() : createNewCache()
         }
 
-        return new Promise(resolve=>{
+        return new Promise(resolve => {
             updateCache();
-            const deleteKey = lru.update(cacheKey);
-            this.forceUpdate(()=>{
-                resolve(this.nodes.get(cacheKey),this.store.get(cacheKey))
-                // console.log('this.nodes1',this.nodes);
-                if(this.nodes.get(deleteKey)) return ;//如果节点存在，则不能删除键
-                this.nodes.delete(deleteKey)
-                // console.log('this.nodes2',this.nodes);
+            const deleteKey = this.lru.update(cacheKey);
+            this.forceUpdate(() => {
+                resolve(this.store.get(cacheKey))
+
+                if (!deleteKey) return;
+                const cache = this.store.get(deleteKey);
+                const node = cache.node
+                if(node){
+                    // node.remove();
+                    // cache.node = null;
+                    // cache.children = null;
+                }
             })
         });
     }
 
     render() {
-        // console.log('state',this.state);
-        // console.log('nodes',this.nodes);
-        // const renderStore = [...this.store.values()].filter(x=>lru.cacheMap.has(x.cacheKey))
+        console.log(
+            "render",
+            // this.lru.cacheMap,
+            this.store
+        )
+        // debugger
         return <KeepAliveScopeContext.Provider value={ {
-                updateCache:this.updateCache,
-            } }>
+            updateCache: this.updateCache,
+        } }>
             {
                 this.props.children
             }
             {
-                <div style={{display:'none'}} ref={node => this.container = node}>
+                <div style={ { display: 'none' } } ref={ node => this.container = node }>
                     {
-                        [...this.store.values()].map((cache)=>{
-                            // const cache = this.store.get(key);
-                            const {cacheKey,children} = cache;
-                            const isExist = lru.cacheMap.has(cacheKey);
-                            return (
-                                <div key={cacheKey} ref={node=>{
-                                    isExist && this.nodes.set(cacheKey,node);
-                                }}>
-                                    <KeepAliveProvider value={{cache}}>
-                                        {isExist ? children : null}
-                                    </KeepAliveProvider>
-                                </div>
-                            )
+                        [...this.store.keys()].map((key) => {
+                            const cache = this.store.get(key);
+                            const { cacheKey, children } = cache;
+                            // const isExist = this.lru.cacheMap.has(cacheKey);
+                            return children === null ? null : <Keeper key={ cacheKey } cache={ cache }>{ children }</Keeper>
                         })
                     }
                 </div>
             }
             {/*{
-                createPortal(Object.values(this.state).map(({cacheKey,children})=>{
-                    return <div key={cacheKey} ref={node=>{
-                        this.nodes[cacheKey] = node;
-                    }}>
-                        {children}
-                    </div>
-                }),this.container)
-            }*/}
+                ReactDOM.createPortal(
+                    [...this.store.values()].map((cache, i) => {
+                        // const cache = this.store.get(key);
+                        const { cacheKey, children } = cache;
+                        console.log(i, cacheKey)
+                        const isExist = this.lru.cacheMap.has(cacheKey);
+                        return (
+                            <div key={ cacheKey } ref={ node => {
+                                isExist && this.nodes.set(cacheKey, node);
+                            } }>
+                                <KeepAliveProvider value={ { cache } }>
+                                    { isExist ? children : null }
+                                </KeepAliveProvider>
+                            </div>
+                        )
+                    })
+                    , this.container)
+            }*/ }
         </KeepAliveScopeContext.Provider>;
     }
 }
@@ -111,3 +120,26 @@ export default class KeepAliveScope extends PureComponent {
 //     document.body.appendChild(dom);
 //     return dom;
 // }
+
+class Keeper extends PureComponent {
+    componentWillUnmount() {
+        const node = this.props.cache.node
+        const parentNode = node.parent;
+        console.log('componentWillUnmount')
+        if(parentNode) {
+            parentNode.replaceChild(node,document.createComment('注释'))
+        }
+    }
+
+    render() {
+        const cache = this.props.cache;
+        return <div ref={ node => {
+            // if(node === null) console.log(cache.cacheKey,'unmountNode')
+            cache.node = node
+        } }>
+            <KeepAliveProvider value={ { cache } }>
+                { this.props.children }
+            </KeepAliveProvider>
+        </div>
+    }
+}

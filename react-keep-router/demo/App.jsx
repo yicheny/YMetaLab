@@ -13,18 +13,18 @@ import './App.scss'
 // console.log({KeepAliveScope,KeepAlive})
 
 const menuConfig = [
-    {text:"无缓存组件",to:"/app/no-cache"},
+    { text: "无缓存组件", to: "/app/no-cache" },
     // {text:"portal-test",to:"/app/portal-test"},
-    {text:"缓存组件测试",to:"/app/keep"},
-    {text:"缓存组件副作用测试",to:'/app/effect-test'},
-    {text:"多缓存组件测试",to:'/app/many-component-test'},
-    {text:"缓存组件上下文测试",to:'/app/context-test'},
+    { text: "缓存组件测试", to: "/app/keep" },
+    { text: "缓存组件副作用测试", to: '/app/effect-test' },
+    { text: "多缓存组件测试", to: '/app/many-component-test' },
+    { text: "缓存组件上下文测试", to: '/app/context-test' },
     {
-        text:"路由缓存组件测试",
-        children:Array.from(Array(4),(v,k)=>{
+        text: "路由缓存组件测试",
+        children: Array.from(Array(4), (v, k) => {
             return {
-                text:`路由测试页面${k+1}`,
-                to:`/app/keep-route/${k+1}`
+                text: `路由测试页面${ k + 1 }`,
+                to: `/app/keep-route/${ k + 1 }`
             }
         })
     }
@@ -32,10 +32,10 @@ const menuConfig = [
 
 export default function App() {
     return <ErrorBoundary>
-        <Router>
-            <KeepAliveScope>
+        <KeepAliveScope>
+            <Router>
                 <div className="app">
-                    <Menu config={menuConfig}/>
+                    <Menu config={ menuConfig }/>
                     <div className="content">
                         <Switch>
                             <Route path='/app/no-cache'><CounterView title='无缓存测试'/></Route>
@@ -52,7 +52,7 @@ export default function App() {
                                     <EffectTest/>
                                 </KeepAlive>
                             </Route>
-                            <Route path='/app/context-test' component={ContextTest}/>
+                            <Route path='/app/context-test' component={ ContextTest }/>
 
                             <Route path='/app/keep'>
                                 <KeepAlive cacheKey='/app/keep'>
@@ -60,35 +60,35 @@ export default function App() {
                                 </KeepAlive>
                             </Route>
 
-                            <Route path='/app/keep-route' component={KeepRouteView}/>
+                            <Route path='/app/keep-route' component={ KeepRouteView }/>
 
                             <Route>Home</Route>
                         </Switch>
                     </div>
                 </div>
-            </KeepAliveScope>
-        </Router>
+            </Router>
+        </KeepAliveScope>
     </ErrorBoundary>
 }
 
-import {PureComponent,Fragment} from "react";
+import { PureComponent, Fragment } from "react";
 
 class ErrorBoundary extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = {error: null};
+        this.state = { error: null };
     }
 
     static getDerivedStateFromError(error) {
-        return {error};
+        return { error };
     }
 
     componentDidCatch(error, errorInfo) {
-        console.log(error,errorInfo)
+        console.log('componentDidCatch',error,errorInfo)
     }
 
     render() {
-        if (this.state.error) return <pre style={{color: 'red', whiteSpace: 'pre-wrap'}}>{this.state.error}</pre>;
-        return <Fragment>{this.props.children}</Fragment>;
+        if (this.state.error) return <pre style={ { color: 'red', whiteSpace: 'pre-wrap' } }>{ this.state.error.message }</pre>;
+        return <Fragment>{ this.props.children }</Fragment>;
     }
 }
