@@ -1,8 +1,8 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Menu from "./Menu.jsx";
-// import {KeepAliveScope,KeepAlive} from 'react-keep-router';//发布包测试
-import { KeepAlive, KeepAliveScope } from '../src';//日常修改测试
+// import {KeepAliveScopeR,KeepAliveR} from 'react-keep-router';//发布包测试
+import { KeepAliveR, KeepAliveScopeR } from '../src';//日常修改测试
 import CounterView from "./Views/CounterView.jsx";
 import PortalTest from "./Views/PortalTest.jsx";
 import EffectTest from "./Views/EffectTest.jsx";
@@ -10,7 +10,7 @@ import ContextTest from "./Views/ContextTest.jsx";
 import KeepRouteView from "./Views/KeepRouteView.jsx";
 import './App.scss'
 
-// console.log({KeepAliveScope,KeepAlive})
+// console.log({KeepAliveScopeR,KeepAliveR})
 
 const menuConfig = [
     { text: "无缓存组件", to: "/app/no-cache" },
@@ -32,7 +32,7 @@ const menuConfig = [
 
 export default function App() {
     return <ErrorBoundary>
-        <KeepAliveScope>
+        <KeepAliveScopeR>
             <Router>
                 <div className="app">
                     <Menu config={ menuConfig }/>
@@ -41,23 +41,23 @@ export default function App() {
                             <Route path='/app/no-cache'><CounterView title='无缓存测试'/></Route>
                             <Route path='/app/portal-test'><PortalTest/></Route>
                             <Route path='/app/effect-test'>
-                                <KeepAlive cacheKey='/app/effect-test'>
+                                <KeepAliveR cacheKey='/app/effect-test'>
                                     <EffectTest/>
-                                </KeepAlive>
+                                </KeepAliveR>
                             </Route>
                             <Route path='/app/many-component-test'>
-                                <KeepAlive cacheKey='/app/many-component-test'>
+                                <KeepAliveR cacheKey='/app/many-component-test'>
                                     <EffectTest/>
                                     <EffectTest/>
                                     <EffectTest/>
-                                </KeepAlive>
+                                </KeepAliveR>
                             </Route>
                             <Route path='/app/context-test' component={ ContextTest }/>
 
                             <Route path='/app/keep'>
-                                <KeepAlive cacheKey='/app/keep'>
+                                <KeepAliveR cacheKey='/app/keep'>
                                     <CounterView title='keep'/>
-                                </KeepAlive>
+                                </KeepAliveR>
                             </Route>
 
                             <Route path='/app/keep-route' component={ KeepRouteView }/>
@@ -67,7 +67,7 @@ export default function App() {
                     </div>
                 </div>
             </Router>
-        </KeepAliveScope>
+        </KeepAliveScopeR>
     </ErrorBoundary>
 }
 

@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { useMemo,useEffect } from 'react';
 import { Route } from 'react-router-dom';
-import KeepAlive from "./KeepAlive/KeepAlive.jsx";
+// import KeepAlive from "./KeepAlive/KeepAlive.jsx";
+import KeepAliveR from "./KeepAlive/KeepAliveR.jsx";
 import utils from './KeepAlive/utils';
-// import routeCache from "./RouteCaChe";
 
 function KeepRoute({ children, component, path, ...rest }) {
     return <Route path={ path } { ...rest }>
-        <KeepAlive cacheKey={ path }>
+        <KeepAliveR cacheKey={ path }>
             {useRender(component,children)}
-        </KeepAlive>
+        </KeepAliveR>
     </Route>
 }
 
@@ -26,3 +26,5 @@ function useRender(component,children){
             : children
     },[])
 }
+
+

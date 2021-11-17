@@ -13,18 +13,18 @@ function KeepAlive({ children, cacheKey }) {
 
         let node = null;
         updateCache(cacheKey, children).then((statusCache) => {
-            node = statusCache.node;
-            setCache(statusCache);
-            if(node && containerRef.current){
-                containerRef.current.appendChild(node);
-            }
+            // node = statusCache.node;
+            // setCache(statusCache);
+            // if(node && containerRef.current){
+                // containerRef.current.appendChild(node);
+            // }
         });
 
         return () => {
-            if (node && containerRef.current) {
+            // if (node && containerRef.current) {
                 // eslint-disable-next-line react-hooks/exhaustive-deps
-                containerRef.current.removeChild(node);
-            }
+                // containerRef.current.removeChild(node);
+            // }
         }
     }, [
         updateCache,
@@ -48,7 +48,7 @@ function KeepAlive({ children, cacheKey }) {
     },[cache])
 
     // console.log('cache',cache)
-    return <div ref={ containerRef }/>
+    return <div ref={ containerRef } className='keep-alive'/>
 }
 
 export default memo(KeepAlive)

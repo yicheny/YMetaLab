@@ -1,5 +1,5 @@
-import React, { createContext, PureComponent, useContext } from 'react';
-// import ReactDOM from 'react-dom'
+import React, { createContext, Fragment, PureComponent, useContext } from 'react';
+import ReactDOM from 'react-dom'
 import { KeepAliveProvider } from "./KeepAliveContext.jsx";
 import utils from './utils';
 import { createLRU } from "./createLRU";
@@ -16,10 +16,25 @@ export default class KeepAliveScope extends PureComponent {
         this.container = null;
         // this.container = createContainer();
 
-        this.lru = createLRU(2);
+        this.lru = createLRU(1);
+        this.deleteKey = null;
+        // this.needRerender = false;
 
         //保存key、children、node【DOM】
         this.store = new Map();
+    }
+
+    componentDidUpdate() {
+        if(this.deleteKey){
+            this.store.delete(this.deleteKey)
+            this.deleteKey = null;
+            this.forceUpdate();
+        }
+        // if(this.needRerender){
+        //     this.forceUpdate();
+        //     this.needRerender = false;
+        //     console.log('needRerender')
+        // }
     }
 
     updateCache = (cacheKey, children) => {
@@ -49,18 +64,29 @@ export default class KeepAliveScope extends PureComponent {
 
         return new Promise(resolve => {
             updateCache();
-            const deleteKey = this.lru.update(cacheKey);
+            this.deleteKey = this.lru.update(cacheKey);
+            // console.log('f1');
             this.forceUpdate(() => {
                 resolve(this.store.get(cacheKey))
 
-                if (!deleteKey) return;
-                const cache = this.store.get(deleteKey);
-                const node = cache.node
-                if(node){
-                    // node.remove();
-                    // cache.node = null;
-                    // cache.children = null;
-                }
+                // console.log('f2',this.store)
+                // if (!this.deleteKey) return;
+                // this.store.delete(this.deleteKey)
+                // console.log('f3');
+                // this.forceUpdate(()=>console.log('f5'));
+                // console.log('f4');
+
+                // const cache = this.store.get(deleteKey);
+                // const node = cache.node
+                // if(node){
+                //     node.remove();
+                //     cache.node = null;
+                //     console.log('f2');
+                //     this.forceUpdate(()=>{
+                //         this.store.delete(deleteKey)
+                //         console.log('f3');
+                //     });
+                // }
             })
         });
     }
@@ -75,22 +101,27 @@ export default class KeepAliveScope extends PureComponent {
         return <KeepAliveScopeContext.Provider value={ {
             updateCache: this.updateCache,
         } }>
-            {
-                this.props.children
-            }
-            {
-                <div style={ { display: 'none' } } ref={ node => this.container = node }>
-                    {
-                        [...this.store.keys()].map((key) => {
-                            const cache = this.store.get(key);
-                            const { cacheKey, children } = cache;
-                            // const isExist = this.lru.cacheMap.has(cacheKey);
-                            return children === null ? null : <Keeper key={ cacheKey } cache={ cache }>{ children }</Keeper>
-                        })
-                    }
-                </div>
-            }
-            {/*{
+           <Fragment>
+               {
+                   this.props.children
+               }
+               {
+                   <div style={ { display: 'none' } } ref={ node => this.container = node }>
+                       {
+                           [...this.store.keys()].map((key) => {
+                               const cache = this.store.get(key);
+                               const { cacheKey, children } = cache;
+                               // const isExist = this.lru.cacheMap.has(cacheKey);
+                               // if(cache.node){
+                               //     console.log(cache.node.parentNode);
+                               // }
+                               // return cacheKey === this.deleteKey ? null : <Keeper key={ cacheKey } cache={ cache }>{ children }</Keeper>
+                               return <Keeper key={ cacheKey } cache={ cache } isDelete={cacheKey===this.deleteKey}>{ children }</Keeper>
+                           })
+                       }
+                   </div>
+               }
+               {/*{
                 ReactDOM.createPortal(
                     [...this.store.values()].map((cache, i) => {
                         // const cache = this.store.get(key);
@@ -109,6 +140,7 @@ export default class KeepAliveScope extends PureComponent {
                     })
                     , this.container)
             }*/ }
+           </Fragment>
         </KeepAliveScopeContext.Provider>;
     }
 }
@@ -122,20 +154,18 @@ export default class KeepAliveScope extends PureComponent {
 // }
 
 class Keeper extends PureComponent {
-    componentWillUnmount() {
-        const node = this.props.cache.node
-        const parentNode = node.parent;
-        console.log('componentWillUnmount')
-        if(parentNode) {
-            parentNode.replaceChild(node,document.createComment('注释'))
-        }
-    }
-
     render() {
         const cache = this.props.cache;
         return <div ref={ node => {
             // if(node === null) console.log(cache.cacheKey,'unmountNode')
-            cache.node = node
+            if(this.props.isDelete){
+                if(cache.node){
+                    cache.node.remove();
+                    cache.node = null;
+                }
+            }else{
+                cache.node = node
+            }
         } }>
             <KeepAliveProvider value={ { cache } }>
                 { this.props.children }
