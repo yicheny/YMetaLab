@@ -1,5 +1,5 @@
 import React,{ createContext, useContext, useState } from "react";
-import { KeepAlive } from "../../src";
+import { KeepAlive } from "../../lib";
 
 const ContextTestContext = createContext();
 

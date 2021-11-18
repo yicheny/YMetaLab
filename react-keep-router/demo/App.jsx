@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Menu from "./Menu.jsx";
 // import {KeepAliveScope,KeepAlive} from 'react-keep-router';//发布包测试
-import { KeepAlive, KeepAliveScope } from '../src';//日常修改测试
+import { KeepAlive, KeepAliveScope } from '../lib';//日常修改测试
 import CounterView from "./Views/CounterView.jsx";
 import PortalTest from "./Views/PortalTest.jsx";
 import EffectTest from "./Views/EffectTest.jsx";

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch } from "react-router-dom";
 import CounterView from "./CounterView.jsx";
-import { KeepRoute } from "../../src";
+import { KeepRoute } from "../../lib";
 
 export default function KeepRouteView() {
     return <Switch>
