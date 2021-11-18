@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useKeepAliveEffect } from "../../lib";
+import { useKeepAliveEffect } from "../lib";
 
 export default function EffectTest() {
     const [value,setValue] = useState(0);

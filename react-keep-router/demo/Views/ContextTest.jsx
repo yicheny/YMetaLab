@@ -1,5 +1,5 @@
 import React,{ createContext, useContext, useState } from "react";
-import { KeepAlive } from "../../lib";
+import { KeepAlive } from "../lib";
 
 const ContextTestContext = createContext();
 
@@ -9,7 +9,7 @@ export default function ContextTest(){
     return <ContextTestContext.Provider value={value}>
         <h3>这里是父组件，当前值是{value}</h3>
         <button onClick={()=>setValue(value+1)}>增加</button>
-        <KeepAlive cacheKey='/app/context-test/child'>
+        <KeepAlive name='/app/context-test/child'>
             <Child/>
         </KeepAlive>
     </ContextTestContext.Provider>
