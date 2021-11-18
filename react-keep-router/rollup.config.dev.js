@@ -4,6 +4,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from "rollup-plugin-livereload";
 import postcss from 'rollup-plugin-postcss';
+import typescript from "rollup-plugin-typescript";
+import sourceMaps from "rollup-plugin-sourcemaps";
 
 export default {
     input:'demo/index.js',
@@ -27,6 +29,11 @@ export default {
             // extensions:['.js', '.jsx'],
             babelHelpers:"bundled"
         }),
+        typescript({
+            exclude: "node_modules/**",
+            typescript: require("typescript")
+        }),
+        sourceMaps(),
         livereload(),//热加载
         serve({
             open:true,

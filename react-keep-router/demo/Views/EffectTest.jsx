@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import useKeepEffect from "../../src/component/KeepAlive/useKeepEffect";
+import useKeepAliveEffect from "../../src/utils/useKeepAliveEffect";
 
 export default function EffectTest() {
     const [value,setValue] = useState(0);
 
-    useKeepEffect(()=>{
-        console.log(`useKeepEffect，Active！闭包值为${value}`);
+    useKeepAliveEffect(()=>{
+        console.log(`useKeepAliveEffect，Active！闭包值为${value}`);
         return () => {
-            console.log(`useKeepEffect，unActive！闭包值为${value}`)
+            console.log(`useKeepAliveEffect，unActive！闭包值为${value}`)
         }
     })
 
