@@ -32,7 +32,7 @@ const menuConfig = [
 
 export default function App() {
     return <ErrorBoundary>
-        <KeepAliveScope max={2}>
+        <KeepAliveScope max={ 2 }>
             <Router>
                 <div className="app">
                     <Menu config={ menuConfig }/>
@@ -54,11 +54,11 @@ export default function App() {
                             </Route>
                             <Route path='/app/context-test' component={ ContextTest }/>
 
-                            <Route path='/app/keep'>
-                                <KeepAlive name='/app/keep'>
+                            <Route path='/app/keep' render={ () => {
+                                return <KeepAlive name='/app/keep'>
                                     <CounterView title='keep'/>
                                 </KeepAlive>
-                            </Route>
+                            } }/>
 
                             <Route path='/app/keep-route' component={ KeepRouteView }/>
 
@@ -71,7 +71,11 @@ export default function App() {
     </ErrorBoundary>
 }
 
-import { PureComponent, Fragment } from "react";
+import
+{
+    PureComponent, Fragment
+}
+    from "react";
 
 class ErrorBoundary extends PureComponent {
     constructor(props) {
@@ -84,11 +88,12 @@ class ErrorBoundary extends PureComponent {
     }
 
     componentDidCatch(error, errorInfo) {
-        console.log('componentDidCatch',error,errorInfo)
+        console.log('componentDidCatch', error, errorInfo)
     }
 
     render() {
-        if (this.state.error) return <pre style={ { color: 'red', whiteSpace: 'pre-wrap' } }>{ this.state.error.message }</pre>;
+        if (this.state.error) return <pre
+            style={ { color: 'red', whiteSpace: 'pre-wrap' } }>{ this.state.error.message }</pre>;
         return <Fragment>{ this.props.children }</Fragment>;
     }
 }

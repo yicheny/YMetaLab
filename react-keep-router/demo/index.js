@@ -1,4 +1,4 @@
-import init from './init';
+// import init from './init';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./App.jsx";
