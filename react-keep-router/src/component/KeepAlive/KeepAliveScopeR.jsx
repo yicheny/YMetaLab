@@ -50,33 +50,41 @@ export default class KeepAliveScopeR extends PureComponent {
             return isOldCache() ? getOldCache() : createNewCache()
         }
 
+        console.log('updateCache');
         return new Promise(resolve => {
             updateCache();
             this.deleteKey = this.lru.update(cacheKey);
+            if(this.deleteKey){
+                // const cache = this.store.get(this.deleteKey);
+                // cache.node.parentNode.removeChild(cache.node);
+            }
             this.forceUpdate(() => {
+                console.dir(this.container.children)
                 resolve([
                     this.store.get(cacheKey),
+                    ()=>{
+                        if(!this.deleteKey) return null;
+                        const cache = this.store.get(this.deleteKey);
+                        cache.children = null;
+                        cache.node = null;
+                        // cache.node.remove();
+                        // cache.node = null;
+                        this.forceUpdate(()=>{})
+                    }
                 ])
-
-                if(!this.deleteKey) return null;
-                this.store.delete(this.deleteKey);
-                this.forceUpdate()
-
-                // const cache = this.store.get(this.deleteKey);
-                // ReactDOM.unmountComponentAtNode(cache.node);
-                // this.forceUpdate(()=>{
-                //     this.store.delete(this.deleteKey);
-                //     this.forceUpdate()
-                // })
             })
         });
     }
 
     render() {
         console.log(
-            "a26",
-            this.store
+            "a44",
+            this.store,
+            // this.lru.cacheMap
         )
+
+        const lruKeys = [...this.lru.cacheMap.keys()];
+        const keys = [...this.lru.cacheMap.keys()];
         return <KeepAliveScopeContext.Provider value={ {
             updateCache: this.updateCache,
         } }>
@@ -87,10 +95,11 @@ export default class KeepAliveScopeR extends PureComponent {
                 {
                     <div style={ { display: 'none' } } ref={ node => this.container = node }>
                         {
-                            [...this.store.keys()].map((key) => {
+                            keys.map((key) => {
                                 const cache = this.store.get(key);
                                 const { cacheKey, children } = cache;
-                                return <Keeper key={ cacheKey } cache={ cache }>{ children }</Keeper>
+                                const isDelete = !lruKeys.includes(cacheKey);
+                                return <Keeper cache={ cache } key={ cacheKey } isDelete={isDelete}>{ children }</Keeper>
                             })
                         }
                     </div>
@@ -104,7 +113,11 @@ class Keeper extends PureComponent {
     render() {
         const cache = this.props.cache;
         return <div ref={ node => {
-            cache.node = node
+            if(this.props.isDelete){
+                cache.node = null;
+            }else{
+                cache.node = node
+            }
         } }>
             <KeepAliveProvider value={ { cache } }>
                 { this.props.children }

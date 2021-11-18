@@ -8,16 +8,24 @@ function KeepAliveR({ children, cacheKey }) {
 
     useEffect(() => {
         if(!utils.isString(cacheKey)) throw new Error("cacheKey必须是字符类型！")
+        console.log('mount',cacheKey);
         let c = {};
-        updateCache(cacheKey, children).then(([cache]) => {
-            // console.log('cache',cache)
+        const container = containerRef.current;
+        updateCache(cacheKey, children).then(([cache,callback]) => {
+            console.log('updateCache_then')
             c = cache;
-            if(c.node && p){
-                containerRef.current.appendChild(c.node)
+            if(c.node && container && container.parentNode){
+                const nextSibling = container.nextSibling;
+                container.parentNode.insertBefore(c.node,nextSibling)
+                container.parentNode.removeChild(containerRef.current)
             }
+            callback();
         });
         return ()=>{
-            if(c.node) c.node.remove();
+            console.log('unmount',cacheKey);
+            if(c.node && container && container.parentNode){
+                container.parentNode.removeChild(c.node)
+            }
         }
     }, [updateCache, cacheKey, children,])
     return <div ref={ containerRef } className='test-keep-alive'/>
