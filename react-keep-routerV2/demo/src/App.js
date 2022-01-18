@@ -31,7 +31,7 @@ const menuConfig = [
 
 export default function App() {
     return <ErrorBoundary>
-        <KeepAliveScope max={ 3 }>
+        <KeepAliveScope max={ 2 }>
             <Router>
                 <div className="app">
                     <Menu config={ menuConfig }/>
