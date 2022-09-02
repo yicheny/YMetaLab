@@ -1,0 +1,17 @@
+{
+  "name": "runtime-proxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start9101": "nodemon app-9101.js",
+    "start9102": "nodemon app-9102.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodejs-websocket": "^1.7.2",
+    "nodemon": "^2.0.19"
+  }
+}
