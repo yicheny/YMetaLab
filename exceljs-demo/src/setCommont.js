@@ -19,7 +19,7 @@ const cellA1 = worksheet.getCell('A1');
 cellA1.note = '这是标题A的悬停批注';
 
 // 将工作簿保存为Excel文件
-workbook.xlsx.writeFile('output.xlsx')
+workbook.xlsx.writeFile('exceljs-comment.xlsx')
     .then(function() {
         console.log("Excel 文件已创建并保存。");
     });

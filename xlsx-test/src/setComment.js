@@ -26,4 +26,4 @@ ws[cellRef].c = [comment];
 XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
 // 将工作簿保存为Excel文件
-XLSX.writeFile(wb, 'output.xlsx');
+XLSX.writeFile(wb, '../static/comment-example.xlsx');
