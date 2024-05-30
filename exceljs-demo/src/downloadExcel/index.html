@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate and Download Excel</title>
+</head>
+<body>
+<button id="Button">点击生成excel</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+<script type="module">
+    import {generateExcelWorkbook} from "./utils.js";
+
+    document.getElementById('Button').addEventListener('click', function() {
+        // 示例数据和列配置
+        const data = [
+            { a: 1, b: 2, c: 3 },
+            { a: 4, b: 5, c: 6 },
+            { a: 7, b: 8, c: 9 }
+        ];
+
+        const columns = [
+            { header: '标题1', bind: 'a', comment: "标题1的批注" },
+            { header: '标题2', bind: 'b', comment: "标题2的批注" },
+            { header: '标题3', bind: 'c', comment: "标题3的批注" }
+        ];
+
+        // 指定生成的 Excel 文件名称
+        const fileName = 'excelGenerate.xlsx';
+
+        // 生成 Excel 文件并下载
+        generateExcelWorkbook(data, columns)
+            .then(workbook => {
+                downloadExcelWorkbook(workbook, fileName);
+            });
+    });
+
+    // 将生成的 Excel 文件下载的方法
+    function downloadExcelWorkbook(workbook, fileName) {
+        workbook.xlsx.writeBuffer().then(buffer => {
+            const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            URL.revokeObjectURL(url);
+        });
+    }
+</script>
+</body>
+</html>
