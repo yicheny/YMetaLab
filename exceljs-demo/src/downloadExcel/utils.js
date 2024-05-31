@@ -15,7 +15,7 @@ async function generateExcelWorkbook(data, columns) {
 
     columns.forEach((col, index) => {
         const cell = worksheet.getCell(`${String.fromCharCode(65 + index)}1`);
-        cell.note = col.comment;
+        if(col.comment) cell.note = col.comment;
     });
 
     return workbook;

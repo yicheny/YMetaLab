@@ -19,7 +19,7 @@ async function generateExcel(data, columns, filePath) {
     // 添加标题的批注
     columns.forEach((col, index) => {
         const cell = worksheet.getCell(`${String.fromCharCode(65 + index)}1`);
-        cell.note = col.comment;
+        if(col.comment) cell.note = col.comment;
     });
 
     // 将工作簿保存为Excel文件
@@ -35,7 +35,7 @@ const data = [
 
 const columns = [
     { header: '标题1', bind: 'a', comment: "标题1的批注" },
-    { header: '标题2', bind: 'b', comment: "标题2的批注" },
+    { header: '标题2', bind: 'b' },
     { header: '标题3', bind: 'c', comment: "标题3的批注" }
 ];
 
