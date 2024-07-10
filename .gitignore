@@ -2,5 +2,6 @@
 **/node_modules
 /.idea
 **/dist
+**/build
 /react-keep-router/lib
 /tauri-app-demo/src-tauri/target
