@@ -13,9 +13,10 @@
   },
   "scripts": {
     "tauri": "tauri",
-    "tauri:dev": "tauri dev",
+    "start": "concurrently \"npm:start-react\" \"npm:start-tauri\"",
+    "start-tauri": "wait-on http://localhost:3050 && tauri dev",
+    "start-react": "set PORT=3050 && react-scripts start",
     "tauri:build": "tauri build",
-    "start": "set PORT=3050 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -37,5 +38,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.2.0"
   }
 }
