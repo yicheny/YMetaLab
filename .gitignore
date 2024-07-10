@@ -3,3 +3,4 @@
 /.idea
 **/dist
 /react-keep-router/lib
+/tauri-app-demo/src-tauri/target
