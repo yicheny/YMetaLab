@@ -14,10 +14,11 @@
   "scripts": {
     "tauri": "tauri",
     "start": "concurrently \"npm:start-react\" \"npm:start-tauri\"",
-    "start-tauri": "wait-on http://localhost:3050 && tauri dev",
     "start-react": "set PORT=3050 && react-scripts start",
-    "tauri:build": "npm run build && tauri build",
-    "build": "react-scripts build",
+    "start-tauri": "wait-on http://localhost:3050 && tauri dev",
+    "build": "npm run build && tauri build",
+    "build-react": "npm run build",
+    "build-tauri": "tauri build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
